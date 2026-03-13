@@ -2,7 +2,6 @@ import 'package:apartum/data/onboarding_data.dart';
 import 'package:apartum/screen/auth/login.dart';
 import 'package:apartum/widget/app_button.dart';
 import 'package:apartum/widget/onboarding_indicators.dart';
-import 'package:apartum/widget/onboarding_nav_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -61,7 +60,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           padding: const EdgeInsets.fromLTRB(24, 20, 24, 62),
           child: Column(
             children: [
-              const Spacer(flex: 5),
               Expanded(
                 flex: 4,
                 child: PageView.builder(
@@ -103,7 +101,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   },
                 ),
               ),
-              const Spacer(flex: 3),
               if (isLastPage) ...[
                 OnboardingIndicators(itemCount: OnboardingText.length, currentIndex: _currentIndex),
                 const SizedBox(height: 34),
@@ -120,9 +117,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ] else
                 Row(
                   children: [
-                    OnboardingNavButton(
-                      icon: Icons.arrow_back_rounded,
-                      onTap: _currentIndex == 0 ? null : _goToPreviousPage,
+                    Opacity(
+                      opacity: _currentIndex == 0 ? 0 : 1,
+                      child: IgnorePointer(
+                        ignoring: _currentIndex == 0,
+                        child: AppButton(
+                          width: 58,
+                          height: 58,
+                          borderRadius: 24,
+                          icon: Icons.arrow_back_rounded,
+                          onPressed: _goToPreviousPage,
+                        ),
+                      ),
                     ),
                     Expanded(
                       child: OnboardingIndicators(
@@ -130,9 +136,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         currentIndex: _currentIndex,
                       ),
                     ),
-                    OnboardingNavButton(
+                    AppButton(
+                      width: 58,
+                      height: 58,
+                      borderRadius: 24,
                       icon: Icons.arrow_forward_rounded,
-                      onTap: _goToNextPage,
+                      onPressed: _goToNextPage,
                     ),
                   ],
                 ),
