@@ -60,6 +60,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           padding: const EdgeInsets.fromLTRB(24, 20, 24, 62),
           child: Column(
             children: [
+              const Spacer(flex: 5),
               Expanded(
                 flex: 4,
                 child: PageView.builder(
@@ -101,6 +102,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   },
                 ),
               ),
+              const Spacer(flex: 3),
               if (isLastPage) ...[
                 OnboardingIndicators(itemCount: OnboardingText.length, currentIndex: _currentIndex),
                 const SizedBox(height: 34),
