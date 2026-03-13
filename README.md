@@ -2,7 +2,7 @@
 
 Apartum membantu para ibu memantau kesehatan fisik dan emosional mereka setelah melahirkan dengan merekam gejala dan emosi harian. Sistem menganalisis data untuk mendeteksi potensi komplikasi pascapersalinan dan memberikan peringatan saat gejala berbahaya terdeteksi. Aplikasi juga menyediakan akses konsultasi dengan terapis atau profesional kesehatan mental saat muncul masalah emosional atau risiko depresi pascapersalinan.
 
-## Tim dan Pemilik Dokumen
+## Team Member
 
 - Product Manager: Candy Angelia
 - UI/UX Designer: Wildatus Sakinah
