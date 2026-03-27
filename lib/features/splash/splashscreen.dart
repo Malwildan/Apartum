@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:apartum/screen/onboarding/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -90,9 +89,7 @@ class _SplashScreenState extends State<SplashScreen>
       return;
     }
 
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const OnboardingScreen()),
-    );
+    Navigator.of(context).pushReplacementNamed('/onboarding');
   }
 
   @override
@@ -125,7 +122,7 @@ class _SplashScreenState extends State<SplashScreen>
                   child: ScaleTransition(
                     scale: _logoScaleAnimation,
                     child: Image.asset(
-                      'assets/logo.png',
+                      'assets/images/logo.png',
                       width: 120,
                       height: 120,
                     ),
@@ -148,9 +145,9 @@ class _SplashScreenState extends State<SplashScreen>
                               padding: const EdgeInsets.only(left: 10.0),
                               child: Text(
                                 'Apartum',
-                                style: GoogleFonts.rubik(
+                                style: GoogleFonts.plusJakartaSans(
                                   fontSize: 32,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w700,
                                   color: const Color(0xFFFF2D78),
                                   //letterSpacing: -0.5,
                                 ),

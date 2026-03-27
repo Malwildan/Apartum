@@ -1,5 +1,5 @@
 name: apartum
-description: "A new Flutter project."
+description: "intern bcc 2026"
 publish_to: 'none'
 version: 0.1.0
 
@@ -9,7 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_bloc: ^9.1.1
   google_fonts: ^8.0.2
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -18,5 +20,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets :
-    - assets/
+  assets:
+    - assets/images/logo.png
+    - assets/images/onboarding1.png
+    - assets/images/onboarding2.png
+    - assets/images/onboarding3.png
+    - assets/images/doctor1.png
+    - assets/images/doctor2.png
+    - assets/images/doctor3.png
+    - assets/images/doctor4.png
