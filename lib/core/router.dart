@@ -1,5 +1,5 @@
-import 'package:apartum/features/auth/presentation/pages/loginscreen.dart';
-import 'package:apartum/features/auth/presentation/pages/registerscreen.dart';
+import 'package:apartum/features/auth/presentation/loginscreen.dart';
+import 'package:apartum/features/auth/presentation/registerscreen.dart';
 import 'package:apartum/features/homepage/presentation/homepagescreen.dart';
 import 'package:apartum/features/konseling/presentation/konselingscreen.dart';
 import 'package:apartum/features/onboarding/presentation/onboardingscreen.dart';

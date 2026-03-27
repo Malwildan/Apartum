@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SleepPredictionWidget extends StatelessWidget {
   const SleepPredictionWidget({
@@ -39,7 +40,7 @@ class SleepPredictionWidget extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               minFontSize: 12,
-              style: const TextStyle(
+              style: GoogleFonts.plusJakartaSans(
                 fontSize: 12,
                 height: 1.3,
                 color: Color(0xFF252525),
@@ -60,7 +61,7 @@ class SleepPredictionWidget extends StatelessWidget {
               ),
               child: Text(
                 buttonLabel,
-                style: const TextStyle(
+                style: GoogleFonts.plusJakartaSans(
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFFFF4D6D),
