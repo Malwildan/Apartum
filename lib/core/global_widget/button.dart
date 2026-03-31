@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
@@ -5,8 +6,8 @@ class AppButton extends StatelessWidget {
 		super.key,
 		required this.label,
 		this.onPressed,
-		this.backgroundColor = const Color(0xFFFF3B7A),
-		this.foregroundColor = Colors.white,
+		this.backgroundColor,
+		this.foregroundColor,
 		this.borderRadius = 999,
 		this.leading,
 		this.trailing,
@@ -19,8 +20,8 @@ class AppButton extends StatelessWidget {
 
 	final String label;
 	final VoidCallback? onPressed;
-	final Color backgroundColor;
-	final Color foregroundColor;
+	final Color? backgroundColor;
+	final Color? foregroundColor;
 	final double borderRadius;
 	final Widget? leading;
 	final Widget? trailing;
@@ -54,12 +55,12 @@ class AppButton extends StatelessWidget {
 								height: 20,
 								child: CircularProgressIndicator(
 									strokeWidth: 2,
-									valueColor: AlwaysStoppedAnimation<Color>(foregroundColor),
+									valueColor: AlwaysStoppedAnimation<Color>(foregroundColor ?? Colors.white),
 								),
 							)
 						: Row(
 								mainAxisAlignment: MainAxisAlignment.center,
-								mainAxisSize: MainAxisSize.max,
+								mainAxisSize: MainAxisSize.min,
 								children: [
 									if (leading != null) ...[
 										leading!,
@@ -67,12 +68,7 @@ class AppButton extends StatelessWidget {
 									],
 									Text(
 										label,
-										style: textStyle ??
-												Theme.of(context).textTheme.labelLarge?.copyWith(
-															color: foregroundColor,
-															fontWeight: FontWeight.w600,
-                              fontSize: 16,
-														),
+										style: textStyle,
 									),
 									if (trailing != null) ...[
 										const SizedBox(width: 8),

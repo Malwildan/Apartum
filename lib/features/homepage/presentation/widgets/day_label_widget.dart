@@ -1,3 +1,5 @@
+import 'package:apartum/core/theme/app_typography.dart';
+import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:apartum/features/homepage/domain/entities/day_sleep_entity.dart';
 import 'package:apartum/features/homepage/domain/entities/day_status.dart';
 import 'package:flutter/material.dart';
@@ -16,16 +18,17 @@ class DayLabelWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2.5),
           decoration: data.isToday
               ? BoxDecoration(
-                  color: const Color(0xFFFF6A87),
+                  color: StaticColor.primaryPink,
                   borderRadius: BorderRadius.circular(11),
                 )
               : null,
           child: Text(
             data.label,
-            style: TextStyle(
-              fontSize: 24 / 2,
-              fontWeight: FontWeight.w500,
-              color: data.isToday ? Colors.white : const Color(0xFF212121),
+            style: AppTypography.b3.copyWith(
+              fontSize: 12,
+              color: data.isToday
+                  ? StaticColor.surface
+                  : StaticColor.textPrimary,
             ),
           ),
         ),
@@ -40,15 +43,15 @@ class DayLabelWidget extends StatelessWidget {
       case DayStatus.orange:
         return _letterCircle(const Color(0xFFF59F0A), 'P');
       case DayStatus.yellow:
-        return _iconCircle(const Color(0xFFEF4D55), Icons.warning_rounded);
+        return _iconCircle(StaticColor.errorRed, Icons.warning_rounded);
       case DayStatus.green:
-        return _iconCircle(const Color(0xFF33C17E), Icons.check_rounded);
+        return _iconCircle(StaticColor.successGreen, Icons.check_rounded);
       case DayStatus.dot:
         return Container(
           width: 7,
           height: 7,
-          decoration: const BoxDecoration(
-            color: Color(0xFFE9B5C3),
+          decoration: BoxDecoration(
+            color: StaticColor.primaryPink.withOpacity(0.4),
             shape: BoxShape.circle,
           ),
         );
@@ -62,7 +65,7 @@ class DayLabelWidget extends StatelessWidget {
       width: 18,
       height: 18,
       decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-      child: Icon(icon, size: 11, color: Colors.white),
+      child: Icon(icon, size: 11, color: StaticColor.surface),
     );
   }
 
@@ -74,8 +77,8 @@ class DayLabelWidget extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         text,
-        style: const TextStyle(
-          color: Colors.white,
+        style: AppTypography.detail.copyWith(
+          color: StaticColor.surface,
           fontSize: 9,
           fontWeight: FontWeight.w700,
           height: 1,

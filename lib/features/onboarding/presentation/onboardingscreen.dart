@@ -1,8 +1,11 @@
 import 'package:apartum/core/global_widget/button.dart';
+import 'package:apartum/core/theme/app_typography.dart';
+import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:apartum/features/onboarding/presentation/widgets/pagination_widget.dart';
 import 'package:apartum/features/onboarding/data/onboarding_data.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -19,70 +22,74 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final item = onboardingData[_currentIndex];
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F4F5),
+      backgroundColor: StaticColor.background,
       body: Center(
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 36),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
-                  child: Image.asset(
-                    item.image,
-                    key: ValueKey<String>(item.image),
-                    height: 300,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                const SizedBox(height: 36),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
-                  child: Text(
-                    item.title,
-                    key: ValueKey<String>(item.title),
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.plusJakartaSans(
-                      color: Color(0xFFFF4D6D),
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
+                // SizedBox(height: 24.h),
+                Expanded(
+                  child: Center(
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 250),
+                      child: Image.asset(
+                        item.image,
+                        key: ValueKey<String>(item.image),
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 18),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
-                  child: Text(
-                    item.description,
-                    key: ValueKey<String>(item.description),
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.plusJakartaSans(
-                      color: Color(0xFF202123),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      height: 1.4,
-                    ),
+                SizedBox(height: 48.h),
+                SizedBox(
+                  height: 156.h,
+                  child: Column(
+                    children: [
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 250),
+                        child: Text(
+                          item.title,
+                          key: ValueKey<String>(item.title),
+                          textAlign: TextAlign.center,
+                          style: AppTypography.h1.copyWith(
+                            color: StaticColor.primaryPink,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 16.h),
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 250),
+                        child: AutoSizeText(
+                          item.description,
+                          //minFontSize: 10,
+                          maxLines: 4,
+                          key: ValueKey<String>(item.description),
+                          textAlign: TextAlign.center,
+                          style: AppTypography.b1.copyWith(
+                            color: StaticColor.textPrimary,
+                            height: 1.4,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const Spacer(),
+                SizedBox(height: 16.h),
                 Opacity(
                   opacity: _currentIndex == onboardingData.length - 1 ? 1 : 0,
                   child: AppButton(
                     label: 'Mulai Sekarang',
-                    textStyle: GoogleFonts.plusJakartaSans(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
                     onPressed: () {
                       Navigator.of(context).pushReplacementNamed('/login');
                     },
                   ),
                 ),
-                SizedBox(height: 64),
+                SizedBox(height: 32.h),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 28),
+                  padding: EdgeInsets.only(bottom: 12.h),
                   child: PaginationWidget(
                     pageCount: onboardingData.length,
                     initialPage: _currentIndex,

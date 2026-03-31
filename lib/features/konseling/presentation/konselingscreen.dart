@@ -1,8 +1,11 @@
-import 'package:apartum/core/global_data/doctor_data.dart';
 import 'package:apartum/core/global_widget/bottom_nav_widget.dart';
 import 'package:apartum/core/global_widget/doctor_card_widget.dart';
+import 'package:apartum/core/theme/app_typography.dart';
+import 'package:apartum/core/theme/app_static_color.dart';
+import 'package:apartum/features/konseling/presentation/cubit/konseling_cubit.dart';
+import 'package:apartum/features/konseling/presentation/cubit/konseling_state.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Konselingscreen extends StatefulWidget {
   const Konselingscreen({super.key});
@@ -12,40 +15,43 @@ class Konselingscreen extends StatefulWidget {
 }
 
 class _KonselingscreenState extends State<Konselingscreen> {
-  int _selectedIndex = 2; 
+  int _selectedIndex = 2;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<KonselingCubit>().fetchPsychologists();
+    });
+  }
+
+  String _formatPrice(num priceIdr) {
+    String sp = priceIdr.toString();
+    sp = sp.replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (Match m) => '${m[1]}.',
+    );
+    return 'Rp $sp';
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Konsultasi dengan Psikolog/Ahli', style: GoogleFonts.plusJakartaSans(
-          color: Colors.black,
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-        ),),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        title: Text('Konsultasi dengan Psikolog/Ahli', style: AppTypography.h2),
+        backgroundColor: StaticColor.surface,
         centerTitle: true,
         elevation: 6,
         shadowColor: const Color.fromRGBO(0, 0, 0, 0.2),
         surfaceTintColor: Colors.transparent,
       ),
       bottomNavigationBar: BottomNavWidget(
-        items: const [
-          BottomNavItemData(icon: Icons.home_rounded, label: 'Beranda'),
-          BottomNavItemData(icon: Icons.history, label: 'Riwayat'),
-          BottomNavItemData(
-            icon: Icons.support_agent_rounded,
-            label: 'Konseling',
-          ),
-          BottomNavItemData(icon: Icons.person_rounded, label: 'Profil'),
-        ],
         selectedIndex: _selectedIndex,
         onItemTap: (index) {
           if (index == _selectedIndex) {
             return;
           }
 
-          // Handle navigation only when changing page.
           if (index == 0) {
             Navigator.pushReplacementNamed(context, '/home');
           } else if (index == 3) {
@@ -56,53 +62,81 @@ class _KonselingscreenState extends State<Konselingscreen> {
             });
           }
         },
-        onCenterTap: () {
-          // Handle center button tap (Catat Gejala)
-        },
-        centerIcon: Icons.child_care_rounded,
-        centerLabel: 'Catat Gejala',
-        activeColor: const Color(0xFFFF4D6D),
-        inactiveColor: const Color(0xFF8E8E8E),
-        backgroundColor: const Color(0xFFFAFAFA),
-        borderColor: const Color(0xFFE0E0E0),
+        activeColor: StaticColor.primaryPink,
+        inactiveColor: StaticColor.textMuted,
+        backgroundColor: StaticColor.background,
+        borderColor: StaticColor.divider,
       ),
-      body:
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 23),
-            child: Column(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 23),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text('Daftar Psikolog', style: GoogleFonts.plusJakartaSans(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black
-                    ), textAlign: TextAlign.center,),
-                  ],
-                ),
-                SizedBox(height: 12),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: doctorsData.length,
-                    itemBuilder: (context, index){
-                      final doctor = doctorsData[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: DoctorCardWidget(
-                          image: AssetImage(doctor.imagePath),
-                          doctorName: doctor.doctorName,
-                          specializationAndExperience: doctor.specializationAndExperience,
-                          priceText: doctor.priceText,
-                        ),
-                      );
-                    }
-                  ),
+                Text(
+                  'Daftar Psikolog',
+                  style: AppTypography.h2,
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
-          ),
-        
-      );
+            const SizedBox(height: 12),
+            Expanded(
+              child: BlocBuilder<KonselingCubit, KonselingState>(
+                builder: (context, state) {
+                  if (state is KonselingLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is KonselingError) {
+                    return Center(
+                      child: Text(
+                        state.message,
+                        style: AppTypography.b2Regular.copyWith(
+                          color: StaticColor.textMuted,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  } else if (state is KonselingLoaded) {
+                    final psychologists = state.psychologists;
+
+                    if (psychologists.isEmpty) {
+                      return Center(
+                        child: Text(
+                          'Belum ada psikolog tersedia.',
+                          style: AppTypography.b2Regular.copyWith(
+                            color: StaticColor.textMuted,
+                          ),
+                        ),
+                      );
+                    }
+
+                    return ListView.builder(
+                      itemCount: psychologists.length,
+                      itemBuilder: (context, index) {
+                        final doctor = psychologists[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: DoctorCardWidget(
+                            image: NetworkImage(doctor.photoUrl),
+                            doctorName: doctor.name,
+                            specializationAndExperience:
+                                '${doctor.job} • ${doctor.experienceYears} Tahun Pengalaman',
+                            priceText: _formatPrice(doctor.priceIdr),
+                          ),
+                        );
+                      },
+                    );
+                  }
+
+                  // Initial state or fallback
+                  return const SizedBox();
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

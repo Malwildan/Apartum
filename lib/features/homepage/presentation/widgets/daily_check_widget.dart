@@ -1,7 +1,8 @@
+import 'package:apartum/core/theme/app_typography.dart';
+import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:apartum/core/global_widget/button.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class DailyCheckWidget extends StatelessWidget {
   const DailyCheckWidget({
@@ -21,13 +22,9 @@ class DailyCheckWidget extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 10),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [Color.fromARGB(255, 255, 211, 219), Color(0xFFFFFFFF)],
-        ),
+        gradient: StaticColor.linearPink,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFFF4D6D), width: 1.2),
+        border: Border.all(color: StaticColor.primaryPink, width: 1.2),
         boxShadow: [
           BoxShadow(
             color: const Color.fromRGBO(0, 0, 0, 0.2),
@@ -45,11 +42,9 @@ class DailyCheckWidget extends StatelessWidget {
             maxLines: 2,
             minFontSize: 10,
             overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.plusJakartaSans(
-              fontSize: 12,
+            style: AppTypography.b3.copyWith(
               height: 1.25,
-              color: Color(0xFF1F1F1F),
-              fontWeight: FontWeight.w500,
+              color: StaticColor.textPrimary,
             ),
           ),
           const SizedBox(height: 12),
@@ -58,11 +53,10 @@ class DailyCheckWidget extends StatelessWidget {
             onPressed: () {},
             height: 44,
             borderRadius: 24,
-            backgroundColor: const Color(0xFFFF4D6D),
-            foregroundColor: Colors.white,
-            textStyle: GoogleFonts.plusJakartaSans(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+            backgroundColor: StaticColor.primaryPink,
+            foregroundColor: StaticColor.surface,
+            textStyle: AppTypography.button1.copyWith(
+              color: StaticColor.surface,
             ),
           ),
         ],

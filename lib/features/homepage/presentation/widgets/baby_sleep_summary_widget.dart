@@ -1,8 +1,9 @@
+import 'package:apartum/core/theme/app_typography.dart';
+import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:apartum/features/homepage/data/repositories/sleep_repository_impl.dart';
 import 'package:apartum/features/homepage/domain/entities/day_sleep_entity.dart';
 import 'package:apartum/features/homepage/domain/usecases/get_weekly_sleep_usecase.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'day_label_widget.dart';
 import 'sleep_bar_widget.dart';
@@ -56,36 +57,27 @@ class BabySleepSummaryWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Ringkasan',
-          style: GoogleFonts.plusJakartaSans(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF151515),
-          ),
-        ),
+        Text('Ringkasan', style: AppTypography.h2),
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               'Hari ini',
-              style: GoogleFonts.plusJakartaSans(
-                fontSize: 14,
-                color: Color(0xFF222222),
+              style: AppTypography.b2Regular.copyWith(
+                color: StaticColor.textPrimary,
               ),
             ),
             const SizedBox(height: 3),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 4),
               decoration: BoxDecoration(
-                color: const Color(0xFFFF5A78),
+                color: StaticColor.primaryPink,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
                 '12 Maret 2026',
-                style: GoogleFonts.plusJakartaSans(
-                  fontSize: 10,
-                  color: Colors.white,
+                style: AppTypography.b4.copyWith(
+                  color: StaticColor.surface,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -122,13 +114,13 @@ class BabySleepSummaryWidget extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             alignment: Alignment.center,
-            child: const Text(
+            child: Text(
               'i',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 11,
+              style: AppTypography.detail.copyWith(
+                color: StaticColor.surface,
                 fontWeight: FontWeight.w700,
+                fontSize: 11,
               ),
             ),
           ),
@@ -139,8 +131,7 @@ class BabySleepSummaryWidget extends StatelessWidget {
               children: [
                 Text(
                   'Status Hari Ini: Aman',
-                  style: GoogleFonts.plusJakartaSans(
-                    fontSize: 12,
+                  style: AppTypography.h4.copyWith(
                     fontWeight: FontWeight.w700,
                     color: const Color(0xFF2A3D3E),
                   ),
@@ -148,9 +139,7 @@ class BabySleepSummaryWidget extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   'Tidak ada tanda bahaya dari catatan terakhir',
-                  style: GoogleFonts.plusJakartaSans(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w500,
+                  style: AppTypography.b4.copyWith(
                     color: const Color(0xFF2F3F40),
                     height: 1.2,
                   ),
@@ -163,16 +152,18 @@ class BabySleepSummaryWidget extends StatelessWidget {
             children: [
               Text(
                 'Lihat Detail',
-                style: GoogleFonts.plusJakartaSans(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
+                style: AppTypography.h4.copyWith(
                   color: const Color(0xFF2A4A4A),
                   decoration: TextDecoration.underline,
                   decorationColor: const Color(0xFF2A4A4A),
                 ),
               ),
               const SizedBox(width: 3),
-              const Icon(Icons.chevron_right, color: Color(0xFF2A4A4A), size: 18),
+              const Icon(
+                Icons.chevron_right,
+                color: Color(0xFF2A4A4A),
+                size: 18,
+              ),
             ],
           ),
         ],
@@ -217,9 +208,8 @@ class BabySleepSummaryWidget extends StatelessWidget {
                     .map(
                       (label) => Text(
                         label,
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: Color(0xFF5F5F5F),
+                        style: AppTypography.b4.copyWith(
+                          color: StaticColor.textMuted,
                           height: 1,
                         ),
                         textAlign: TextAlign.right,

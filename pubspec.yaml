@@ -12,6 +12,9 @@ dependencies:
   flutter_bloc: ^9.1.1
   google_fonts: ^8.0.2
   auto_size_text: ^3.0.0
+  flutter_screenutil: ^5.9.3
+  dio: ^5.8.0+1
+  flutter_secure_storage: ^9.2.2
 
 dev_dependencies:
   flutter_test:

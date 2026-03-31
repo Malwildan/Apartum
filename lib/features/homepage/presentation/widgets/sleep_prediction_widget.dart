@@ -1,6 +1,7 @@
+import 'package:apartum/core/theme/app_typography.dart';
+import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SleepPredictionWidget extends StatelessWidget {
   const SleepPredictionWidget({
@@ -20,18 +21,18 @@ class SleepPredictionWidget extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
       decoration: BoxDecoration(
-        color: const Color(0xFFF6F6F6),
+        color: StaticColor.background,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFFF4D6D), width: 1),
+        border: Border.all(color: StaticColor.primaryPink, width: 1),
         boxShadow: [
           BoxShadow(
             color: Color.fromRGBO(0, 0, 0, 0.2),
             blurRadius: 4,
             offset: Offset(0, 2),
           ),
-        ]
+        ],
       ),
-      
+
       child: Row(
         children: [
           Expanded(
@@ -40,11 +41,9 @@ class SleepPredictionWidget extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               minFontSize: 12,
-              style: GoogleFonts.plusJakartaSans(
-                fontSize: 12,
+              style: AppTypography.b3Regular.copyWith(
                 height: 1.3,
-                color: Color(0xFF252525),
-                fontWeight: FontWeight.w400,
+                color: StaticColor.textPrimary,
               ),
             ),
           ),
@@ -55,16 +54,14 @@ class SleepPredictionWidget extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: StaticColor.surface,
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: const Color(0xFFFF4D6D), width: 1),
+                border: Border.all(color: StaticColor.primaryPink, width: 1),
               ),
               child: Text(
                 buttonLabel,
-                style: GoogleFonts.plusJakartaSans(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xFFFF4D6D),
+                style: AppTypography.b3.copyWith(
+                  color: StaticColor.primaryPink,
                 ),
               ),
             ),

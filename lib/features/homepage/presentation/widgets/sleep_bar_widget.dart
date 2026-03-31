@@ -43,22 +43,28 @@ class SleepBarWidget extends StatelessWidget {
       ),
     );
 
-    if (!data.isSleepTracked) {
-      final capsuleHeight = availableHeight * 0.34;
-      final capsuleTop = availableHeight * 0.57;
+    final startOffset = hourOffset(data.startHour);
+    final endOffset = hourOffset(data.endHour);
 
+    final topFraction = startOffset / chartTotalHours;
+    final heightFraction = endOffset / chartTotalHours - topFraction;
+
+    final topPx = topFraction * availableHeight;
+    final heightPx = heightFraction.abs() * availableHeight;
+
+    if (!data.isSleepTracked) {
       return Align(
         alignment: Alignment.topCenter,
         child: Stack(
           children: [
             backgroundTrack,
             Positioned(
-              top: capsuleTop,
+              top: topPx,
               left: 0,
               right: 0,
               child: Container(
                 width: barWidth,
-                height: capsuleHeight,
+                height: heightPx.clamp(8.0, availableHeight),
                 decoration: BoxDecoration(
                   color: const Color(0xFFFFFFFF),
                   borderRadius: BorderRadius.circular(trackRadius),
@@ -82,15 +88,6 @@ class SleepBarWidget extends StatelessWidget {
         ),
       );
     }
-
-    final startOffset = hourOffset(data.startHour);
-    final endOffset = hourOffset(data.endHour);
-
-    final topFraction = startOffset / chartTotalHours;
-    final heightFraction = endOffset / chartTotalHours - topFraction;
-
-    final topPx = topFraction * availableHeight;
-    final heightPx = heightFraction.abs() * availableHeight;
 
     return Stack(
       clipBehavior: Clip.none,

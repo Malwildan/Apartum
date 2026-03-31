@@ -1,5 +1,6 @@
+import 'package:apartum/core/theme/app_typography.dart';
+import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PaginationWidget extends StatefulWidget {
   final int pageCount;
@@ -15,11 +16,10 @@ class PaginationWidget extends StatefulWidget {
     required this.pageCount,
     this.initialPage = 0,
     required this.onPageChanged,
-    this.activeColor = const Color.fromARGB(255, 255, 77, 110),
+    this.activeColor = StaticColor.primaryPink,
     this.inactiveColor = const Color(0xFFE5E7EB),
     this.activeBgButtonColor = const Color.fromARGB(255, 228, 228, 228),
     this.inactiveArrowColor = const Color.fromARGB(127, 255, 77, 110),
-
   });
 
   @override
@@ -100,12 +100,10 @@ class _PaginationState extends State<PaginationWidget> {
                 child: Center(
                   child: Text(
                     '${(index + 1).toString().padLeft(2, '0')}',
-                    style: GoogleFonts.plusJakartaSans(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
+                    style: AppTypography.b2.copyWith(
                       color: _currentPage == index
-                          ? Colors.white
-                          : Colors.black,
+                          ? StaticColor.surface
+                          : StaticColor.textPrimary,
                     ),
                   ),
                 ),

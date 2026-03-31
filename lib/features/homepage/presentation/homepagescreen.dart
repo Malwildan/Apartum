@@ -1,11 +1,12 @@
 import 'package:apartum/core/global_widget/bottom_nav_widget.dart';
+import 'package:apartum/core/theme/app_typography.dart';
+import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:apartum/features/homepage/presentation/widgets/baby_sleep_summary_widget.dart';
 import 'package:apartum/features/homepage/presentation/widgets/daily_check_widget.dart';
 import 'package:apartum/core/global_widget/doctor_card_widget.dart';
 import 'package:apartum/core/global_data/doctor_data.dart';
 import 'package:apartum/features/homepage/presentation/widgets/sleep_prediction_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({super.key});
@@ -32,20 +33,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: StaticColor.surface,
       bottomNavigationBar: BottomNavWidget(
         selectedIndex: 0,
-        centerIcon: Icons.child_care_rounded,
-        centerLabel: 'Catat Gejala',
-        items: const [
-          BottomNavItemData(icon: Icons.home_rounded, label: 'Beranda'),
-          BottomNavItemData(icon: Icons.history, label: 'Riwayat'),
-          BottomNavItemData(
-            icon: Icons.support_agent_rounded,
-            label: 'Konseling',
-          ),
-          BottomNavItemData(icon: Icons.person_rounded, label: 'Profil'),
-        ],
         onItemTap: (index) {
           if (index == 2) {
             Navigator.pushReplacementNamed(context, '/konseling');
@@ -64,11 +54,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
               Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  // Pink rounded rectangle background
                   Container(
                     height: 188,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFF4D6D),
+                      color: StaticColor.primaryPink,
                       borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(40),
                         bottomRight: Radius.circular(40),
@@ -78,17 +67,15 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       padding: const EdgeInsets.only(left: 44, bottom: 20),
                       child: Row(
                         children: [
-                          const CircleAvatar(
+                          CircleAvatar(
                             radius: 24,
-                            backgroundColor: Color(0xFFF1F1F1),
+                            backgroundColor: StaticColor.background,
                           ),
                           const SizedBox(width: 12),
                           Text(
                             'Halo, Ibu!',
-                            style: GoogleFonts.plusJakartaSans(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
+                            style: AppTypography.h2.copyWith(
+                              color: StaticColor.surface,
                             ),
                           ),
                         ],
@@ -103,7 +90,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   ),
                 ],
               ),
-              //Center(child: BabySleepSummaryWidget()),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -111,14 +97,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 340),
-                    Text(
-                      'Insight hari ini',
-                      style: GoogleFonts.plusJakartaSans(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFF121212),
-                      ),
-                    ),
+                    Text('Insight hari ini', style: AppTypography.h2),
                     const SizedBox(height: 10),
                     const SleepPredictionWidget(
                       message: 'Bayi akan bangun pada sekitar pukul 14.05 WIB',
@@ -132,28 +111,22 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Konsultasi Psikolog',
-                          style: GoogleFonts.plusJakartaSans(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF121212),
-                          ),
-                        ),
+                        Text('Konsultasi Psikolog', style: AppTypography.h2),
                         Row(
                           children: [
                             Text(
                               'Lihat Selengkapnya',
-                              style: GoogleFonts.plusJakartaSans(
-                                fontSize: 12,
-                                color: const Color(0xFFFF4D6D),
-                                fontWeight: FontWeight.w600,
+                              style: AppTypography.h4.copyWith(
+                                color: StaticColor.primaryPink,
                                 decoration: TextDecoration.underline,
-                                decorationColor: const Color(0xFFFF4D6D),
+                                decorationColor: StaticColor.primaryPink,
                               ),
                             ),
-                            //const SizedBox(width: 3),
-                            const Icon(Icons.chevron_right, color: Color(0xFFFF4D6D), size: 18),
+                            Icon(
+                              Icons.chevron_right,
+                              color: StaticColor.primaryPink,
+                              size: 18,
+                            ),
                           ],
                         ),
                       ],
@@ -163,7 +136,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
               ),
               const SizedBox(height: 10),
               SizedBox(
-                height: 140,
+                height: 144,
                 child: PageView.builder(
                   controller: _doctorPageController,
                   itemCount: doctorsData.length,

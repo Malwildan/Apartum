@@ -1,7 +1,14 @@
-import 'package:apartum/features/profile/presentation/widgets/profile_header_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:apartum/core/theme/app_typography.dart';
+import 'package:apartum/core/theme/app_static_color.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:apartum/features/profile/presentation/widgets/profile_header_widget.dart';
 import 'package:apartum/core/global_widget/bottom_nav_widget.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:apartum/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:apartum/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:apartum/features/profile/presentation/cubit/profile_state.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -14,26 +21,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int _selectedIndex = 3;
 
   @override
+  void initState() {
+    super.initState();
+    // Schedule a profile fetch as soon as the widget enters the tree
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ProfileCubit>().fetchProfile();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFAFAFA),
+      backgroundColor: StaticColor.background,
       bottomNavigationBar: BottomNavWidget(
-        items: const [
-          BottomNavItemData(icon: Icons.home_rounded, label: 'Beranda'),
-          BottomNavItemData(icon: Icons.history, label: 'Riwayat'),
-          BottomNavItemData(
-            icon: Icons.support_agent_rounded,
-            label: 'Konseling',
-          ),
-          BottomNavItemData(icon: Icons.person_rounded, label: 'Profil'),
-        ],
         selectedIndex: _selectedIndex,
         onItemTap: (index) {
           if (index == _selectedIndex) {
             return;
           }
 
-         
           if (index == 0) {
             Navigator.pushReplacementNamed(context, '/home');
           } else if (index == 2) {
@@ -44,309 +50,244 @@ class _ProfileScreenState extends State<ProfileScreen> {
             });
           }
         },
-        onCenterTap: () {
-          
-        },
-        centerIcon: Icons.child_care_rounded,
-        centerLabel: 'Catat Gejala',
-        activeColor: const Color(0xFFFF4D6D),
-        inactiveColor: const Color(0xFF8E8E8E),
-        backgroundColor: const Color(0xFFFAFAFA),
-        borderColor: const Color(0xFFE0E0E0),
       ),
-      body: Stack(
-        children: [
-          
-          Column(
+      body: BlocBuilder<ProfileCubit, ProfileState>(
+        builder: (context, state) {
+          if (state is ProfileLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          String name = 'Memuat...';
+          String email = '-';
+          String birthDate = '-';
+
+          if (state is ProfileLoaded || state is ProfileUpdateSuccess) {
+            final profile = state is ProfileLoaded
+                ? state.profile
+                : (state as ProfileUpdateSuccess).profile;
+
+            name = profile.name;
+            email = profile.email;
+            birthDate = profile.birthDate;
+          } else if (state is ProfileError) {
+            name = 'Gagal Memuat';
+          }
+
+          return Stack(
             children: [
-              HeaderSection(),
+              Column(
+                children: [
+                  HeaderSection(),
 
-              const SizedBox(height: 60),
+                  const SizedBox(height: 60),
 
-              Text(
-                'Wildatus Sakinah',
-                style: GoogleFonts.plusJakartaSans(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF121212),
-                ),
-              ),
+                  Text(
+                    name,
+                    style: AppTypography.h1.copyWith(
+                      color: StaticColor.textPrimary,
+                    ),
+                  ),
 
-              const SizedBox(height: 28),
+                  const SizedBox(height: 28),
 
-              
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
-                              'Detail Profil',
-                              style: GoogleFonts.plusJakartaSans(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: const Color(0xFF121212),
+                            Row(
+                              children: [
+                                Text('Detail Profil', style: AppTypography.h3),
+                                const Spacer(),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      '/edit-profile',
+                                    );
+                                  },
+                                  child: Icon(
+                                    Icons.edit_outlined,
+                                    size: 24,
+                                    color: StaticColor.textPrimary,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 20),
+
+                            Container(
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                color: StaticColor.surface,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: Column(
+                                children: [
+                                  _buildProfileRow(
+                                    icon: Icons.mail_outline_rounded,
+                                    label: 'Email',
+                                    value: email,
+                                  ),
+
+                                  const SizedBox(height: 18),
+                                  Divider(
+                                    height: 1,
+                                    color: StaticColor.divider,
+                                  ),
+                                  const SizedBox(height: 22),
+
+                                  _buildProfileRow(
+                                    icon: Icons.person_2_outlined,
+                                    label: 'Username',
+                                    value: name,
+                                  ),
+
+                                  const SizedBox(height: 18),
+                                  Divider(
+                                    height: 1,
+                                    color: StaticColor.divider,
+                                  ),
+                                  const SizedBox(height: 22),
+
+                                  _buildProfileRow(
+                                    icon: Icons.calendar_month_outlined,
+                                    label: 'Tanggal Persalinan',
+                                    value: birthDate,
+                                  ),
+                                ],
                               ),
                             ),
-                            const Spacer(),
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/edit-profile');
-                              }, // Handle edit profile tap
-                              child: const Icon(
-                                Icons.edit_outlined,
-                                size: 24,
-                                color: Color(0xFF121212),
-                              ),
+
+                            const SizedBox(height: 28),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text('Preferensi', style: AppTypography.h3),
+                              ],
                             ),
-                          ],
-                        ),
 
-                        const SizedBox(height: 20),
+                            const SizedBox(height: 20),
 
-                        Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
+                            Container(
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                color: StaticColor.surface,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: Column(
                                 children: [
-                                  const Icon(
-                                    Icons.mail_outline_rounded,
-                                    size: 18,
-                                    color: Color(0xFF4B4B4B),
+                                  _buildPreferenceRow(
+                                    icon: Icons.notifications_none_outlined,
+                                    label: 'Atur Notifikasi',
                                   ),
-                                  const SizedBox(width: 14),
-                                  Text(
-                                    'Email',
-                                    style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(0xFF121212),
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Text(
-                                    'wildatussakinah@gmail.com',
-                                    style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color(0xFF121212),
-                                    ),
-                                  ),
-                                ],
-                              ),
 
-                              const SizedBox(height: 18),
-                              const Divider(
-                                height: 1,
-                                color: Color(0xFFD3D5DC),
-                              ),
-                              const SizedBox(height: 22),
+                                  const SizedBox(height: 20),
+                                  Divider(
+                                    height: 1,
+                                    color: StaticColor.divider,
+                                  ),
+                                  const SizedBox(height: 22),
 
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.person_2_outlined,
-                                    size: 18,
-                                    color: Color(0xFF4B4B4B),
+                                  _buildPreferenceRow(
+                                    icon: Icons.lock_outline_rounded,
+                                    label: 'Ubah Kata Sandi',
                                   ),
-                                  const SizedBox(width: 14),
-                                  Text(
-                                    'Username',
-                                    style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(0xFF121212),
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Text(
-                                    'wildatussa_9',
-                                    style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color(0xFF121212),
-                                    ),
-                                  ),
-                                ],
-                              ),
 
-                              const SizedBox(height: 18),
-                              const Divider(
-                                height: 1,
-                                color: Color(0xFFD3D5DC),
-                              ),
-                              const SizedBox(height: 22),
-
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.calendar_month_outlined,
-                                    size: 18,
-                                    color: Color(0xFF4B4B4B),
+                                  const SizedBox(height: 20),
+                                  Divider(
+                                    height: 1,
+                                    color: StaticColor.divider,
                                   ),
-                                  const SizedBox(width: 14),
-                                  Text(
-                                    'Tanggal Persalinan',
-                                    style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(0xFF121212),
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Text(
-                                    '09-02-2026',
-                                    style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color(0xFF121212),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                                  const SizedBox(height: 24),
 
-                        const SizedBox(height: 28),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Preferensi',
-                              style: GoogleFonts.plusJakartaSans(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: const Color(0xFF121212),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 20),
-
-                        Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.notifications_none_outlined,
-                                    size: 18,
-                                    color: Color(0xFF4B4B4B),
-                                  ),
-                                  const SizedBox(width: 14),
-                                  Text(
-                                    'Atur Notifikasi',
-                                    style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(0xFF121212),
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  const Icon(
-                                    Icons.chevron_right_rounded,
-                                    size: 18,
-                                    color: Color(0xFF121212),
-                                  ),
-                                ],
-                              ),
-
-                              const SizedBox(height: 20),
-                              const Divider(
-                                height: 1,
-                                color: Color(0xFFD3D5DC),
-                              ),
-                              const SizedBox(height: 22),
-
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.lock_outline_rounded,
-                                    size: 18,
-                                    color: Color(0xFF4B4B4B),
-                                  ),
-                                  const SizedBox(width: 14),
-                                  Text(
-                                    'Ubah Kata Sandi',
-                                    style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(0xFF121212),
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  const Icon(
-                                    Icons.chevron_right_rounded,
-                                    size: 18,
-                                    color: Color(0xFF121212),
-                                  ),
-                                ],
-                              ),
-
-                              const SizedBox(height: 20),
-                              const Divider(
-                                height: 1,
-                                color: Color(0xFFD3D5DC),
-                              ),
-                              const SizedBox(height: 24),
-
-                              Row(
-                                children: [
                                   InkWell(
                                     onTap: () {
+                                      context.read<AuthCubit>().logout();
                                       Navigator.pushReplacementNamed(
                                         context,
                                         '/login',
                                       );
                                     },
-                                    child: const Icon(
-                                      Icons.logout_rounded,
-                                      size: 18,
-                                      color: Color(0xFFFF3B30),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Text(
-                                    'Keluar',
-                                    style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xFFFF3B30),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.logout_rounded,
+                                          size: 18,
+                                          color: StaticColor.destructive,
+                                        ),
+                                        SizedBox(width: 12),
+                                        Text(
+                                          'Keluar',
+                                          style: AppTypography.b2.copyWith(
+                                            fontWeight: FontWeight.w700,
+                                            color: StaticColor.destructive,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
 
-                        const SizedBox(height: 80),
-                      ],
+                            const SizedBox(height: 80),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
             ],
-          ),
-        ],
+          );
+        },
       ),
+    );
+  }
+
+  Widget _buildProfileRow({
+    required IconData icon,
+    required String label,
+    required String value,
+  }) {
+    return Row(
+      children: [
+        Icon(icon, size: 18, color: StaticColor.iconMuted),
+        const SizedBox(width: 14),
+        Text(label, style: AppTypography.b2),
+        const SizedBox(width: 16),
+        Expanded(
+          child: AutoSizeText(
+            value,
+            style: AppTypography.b2Regular,
+            textAlign: TextAlign.right,
+            maxLines: 1,
+            minFontSize: 10,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPreferenceRow({required IconData icon, required String label}) {
+    return Row(
+      children: [
+        Icon(icon, size: 18, color: StaticColor.iconMuted),
+        const SizedBox(width: 14),
+        Text(label, style: AppTypography.b2),
+        const Spacer(),
+        Icon(
+          Icons.chevron_right_rounded,
+          size: 18,
+          color: StaticColor.textPrimary,
+        ),
+      ],
     );
   }
 }
