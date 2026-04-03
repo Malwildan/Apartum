@@ -8,9 +8,10 @@ import 'package:apartum/features/homepage/presentation/bloc/homepage_event.dart'
 import 'package:apartum/features/homepage/presentation/bloc/homepage_state.dart';
 import 'package:apartum/features/homepage/presentation/widgets/summary_widget.dart';
 import 'package:apartum/features/homepage/presentation/widgets/daily_check_widget.dart';
-import 'package:apartum/features/homepage/presentation/widgets/sleep_prediction_widget.dart';
-import 'package:apartum/features/konseling/presentation/cubit/konseling_cubit.dart';
-import 'package:apartum/features/konseling/presentation/cubit/konseling_state.dart';
+import 'package:apartum/features/homepage/presentation/widgets/sleep_widget.dart';
+import 'package:apartum/features/konseling/presentation/bloc/konseling_bloc.dart';
+import 'package:apartum/features/konseling/presentation/bloc/konseling_event.dart';
+import 'package:apartum/features/konseling/presentation/bloc/konseling_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,15 +23,19 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
+  static const double _headerHeight = 188;
+  static const double _summaryTopOffset = 120;
+  static const double _summarySectionHeight = 520;
+
   late final PageController _doctorPageController;
 
   @override
   void initState() {
     super.initState();
-    _doctorPageController = PageController(viewportFraction: 0.78);
+    _doctorPageController = PageController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomepageBloc>().add(const LoadHomepageEvent());
-      context.read<KonselingCubit>().fetchPsychologists();
+      context.read<KonselingBloc>().add(FetchPsychologistsEvent());
     });
   }
 
@@ -87,58 +92,62 @@ class _HomePageScreenState extends State<HomePageScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        height: 188,
-                        decoration: BoxDecoration(
-                          color: StaticColor.primaryPink,
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(40),
-                            bottomRight: Radius.circular(40),
+                  SizedBox(
+                    height: _summarySectionHeight,
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: _headerHeight,
+                          decoration: BoxDecoration(
+                            color: StaticColor.primaryPink,
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(40),
+                              bottomRight: Radius.circular(40),
+                            ),
                           ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 44, bottom: 20),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 24,
-                                backgroundColor: StaticColor.background,
-                              ),
-                              const SizedBox(width: 12),
-                              Text(
-                                'Halo, ${homepageState.username ?? 'Ibu'}!',
-                                style: AppTypography.h2.copyWith(
-                                  color: StaticColor.surface,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              left: 44,
+                              bottom: 30,
+                            ),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 24,
+                                  backgroundColor: StaticColor.background,
                                 ),
-                              ),
-                            ],
+                                const SizedBox(width: 12),
+                                Text(
+                                  'Halo, ${homepageState.username ?? 'Ibu'}!',
+                                  style: AppTypography.h2.copyWith(
+                                    color: StaticColor.surface,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        bottom: -320,
-                        left: 20,
-                        right: 20,
-                        child: SummaryWidget(
-                          summaryStatus: _toSummaryStatus(
-                            homepageState.todaySymptom?.alert?.level,
+                        Positioned(
+                          top: _summaryTopOffset,
+                          left: 20,
+                          right: 20,
+                          child: SummaryWidget(
+                            summaryStatus: _toSummaryStatus(
+                              homepageState.todaySymptom?.alert?.level,
+                            ),
+                            todaySymptom: homepageState.todaySymptom,
+                            symptomHistory: homepageState.symptomHistory,
+                            weeklySleep: homepageState.weeklySleep,
+                            onStatusBannerTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/informasi-tanda-bahaya',
+                              );
+                            },
                           ),
-                          todaySymptom: homepageState.todaySymptom,
-                          symptomHistory: homepageState.symptomHistory,
-                          weeklySleep: homepageState.weeklySleep,
-                          onStatusBannerTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/riwayat-catatan',
-                              arguments: {'tabIndex': 0},
-                            );
-                          },
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -146,10 +155,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 340),
                         Text('Insight hari ini', style: AppTypography.h2),
                         const SizedBox(height: 10),
-                        SleepPredictionWidget(
+                        SleepWidget(
                           todaySleep: homepageState.todaySleep,
                           onTap: () {
                             Navigator.pushNamed(
@@ -206,7 +214,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  BlocBuilder<KonselingCubit, KonselingState>(
+                  BlocBuilder<KonselingBloc, KonselingState>(
                     builder: (context, konselingState) {
                       if (konselingState is! KonselingLoaded) {
                         return const SizedBox(height: 144);

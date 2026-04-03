@@ -1,6 +1,7 @@
+import 'package:dio/dio.dart';
+
 import 'package:apartum/core/network/dio_client.dart';
 import 'package:apartum/features/riwayat_catatan/data/models/sleep_daily_model.dart';
-import 'package:dio/dio.dart';
 
 abstract class SleepRemoteDataSource {
   Future<SleepDailyModel> getSleepDaily(String date);

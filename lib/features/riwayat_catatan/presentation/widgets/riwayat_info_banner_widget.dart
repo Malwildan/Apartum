@@ -1,7 +1,9 @@
-import 'package:apartum/core/theme/app_static_color.dart';
-import 'package:apartum/core/theme/app_typography.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:apartum/core/theme/app_static_color.dart';
+import 'package:apartum/core/theme/app_typography.dart';
 
 enum RiwayatInfoBannerVariant { defaultBanner, danger, warning, done }
 
@@ -67,10 +69,10 @@ class RiwayatInfoBannerWidget extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: borderColor, width: 1.2),
         boxShadow: [
           BoxShadow(
@@ -84,34 +86,33 @@ class RiwayatInfoBannerWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 20,
-            height: 20,
+            width: 20.w,
+            height: 20.w,
             decoration: BoxDecoration(
               color: iconBgColor,
               shape: BoxShape.circle,
             ),
             alignment: Alignment.center,
             child: variant == RiwayatInfoBannerVariant.done
-                ? const Icon(Icons.check, color: StaticColor.surface, size: 13)
+                ? Icon(Icons.check, color: StaticColor.surface, size: 13.w)
                 : Text(
                     'i',
                     textAlign: TextAlign.center,
                     style: AppTypography.detail.copyWith(
                       color: StaticColor.surface,
                       fontWeight: FontWeight.w700,
-                      fontSize: 12,
+                      fontSize: 12.sp,
                     ),
                   ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AutoSizeText(
                   displayTitle,
-                  maxLines: 2,
-                  //minFontSize: 10,
+                  maxLines: 1,
                   style: AppTypography.h4.copyWith(
                     fontWeight: FontWeight.w700,
                     color: textColor,

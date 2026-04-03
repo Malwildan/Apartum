@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:apartum/core/theme/app_typography.dart';
-import 'package:flutter/material.dart';
 
 class RiwayatTabsWidget extends StatelessWidget {
   final int activeIndex; // 0 = Riwayat Gejala, 1 = Riwayat Tidur Bayi
@@ -32,7 +34,7 @@ class RiwayatTabsWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Container(
-                  height: 3,
+                  height: 3.h,
                   color: activeIndex == 0
                       ? StaticColor.primaryPink
                       : Colors.transparent,
@@ -57,7 +59,7 @@ class RiwayatTabsWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Container(
-                  height: 3,
+                  height: 3.h,
                   color: activeIndex == 1
                       ? StaticColor.primaryPink
                       : Colors.transparent,

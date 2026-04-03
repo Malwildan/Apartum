@@ -4,16 +4,17 @@ import 'package:apartum/core/router.dart';
 import 'package:apartum/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:apartum/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:apartum/features/auth/domain/repositories/auth_repository.dart';
-import 'package:apartum/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:apartum/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:apartum/features/auth/presentation/bloc/auth_event.dart';
 import 'package:apartum/features/profile/data/datasources/profile_remote_data_source.dart';
 import 'package:apartum/features/profile/data/repositories/profile_repository_impl.dart';
 import 'package:apartum/features/profile/domain/repositories/profile_repository.dart';
-import 'package:apartum/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:apartum/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:apartum/features/konseling/data/datasources/konseling_remote_data_source.dart';
 import 'package:apartum/features/konseling/data/repositories/konseling_repository_impl.dart';
 import 'package:apartum/features/konseling/domain/repositories/konseling_repository.dart';
-import 'package:apartum/features/konseling/presentation/cubit/konseling_cubit.dart';
-import 'package:apartum/features/konseling/presentation/cubit/konseling_detail_cubit.dart';
+import 'package:apartum/features/konseling/presentation/bloc/konseling_bloc.dart';
+import 'package:apartum/features/konseling/presentation/bloc/konseling_detail_bloc.dart';
 import 'package:apartum/features/riwayat_catatan/data/datasources/sleep_remote_data_source.dart';
 import 'package:apartum/features/riwayat_catatan/data/repositories/sleep_repository_impl.dart';
 import 'package:apartum/features/riwayat_catatan/domain/repositories/sleep_repository.dart';
@@ -83,24 +84,24 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(430, 932),
+      designSize: const Size(393, 851),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider<AuthCubit>(
+            BlocProvider<AuthBloc>(
               create: (context) =>
-                  AuthCubit(authRepository, tokenStorage)..checkAuthStatus(),
+                  AuthBloc(authRepository, tokenStorage)..add(const CheckAuthStatusEvent()),
             ),
-            BlocProvider<ProfileCubit>(
-              create: (context) => ProfileCubit(profileRepository),
+            BlocProvider<ProfileBloc>(
+              create: (context) => ProfileBloc(profileRepository),
             ),
-            BlocProvider<KonselingCubit>(
-              create: (context) => KonselingCubit(konselingRepository),
+            BlocProvider<KonselingBloc>(
+              create: (context) => KonselingBloc(konselingRepository),
             ),
-            BlocProvider<KonselingDetailCubit>(
-              create: (context) => KonselingDetailCubit(konselingRepository),
+            BlocProvider<KonselingDetailBloc>(
+              create: (context) => KonselingDetailBloc(konselingRepository),
             ),
             BlocProvider<SleepBloc>(
               create: (context) => SleepBloc(sleepRepository),

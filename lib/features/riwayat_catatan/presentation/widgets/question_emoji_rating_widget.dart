@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:apartum/core/theme/app_typography.dart';
-import 'package:flutter/material.dart';
 
 class QuestionEmojiRatingWidget extends StatelessWidget {
   final String title;
@@ -27,11 +29,11 @@ class QuestionEmojiRatingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: 16.h),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: const Color(0xFFF7F7F9),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: const Color(0xFFEBEBEB)),
       ),
       child: Column(
@@ -44,12 +46,12 @@ class QuestionEmojiRatingWidget extends StatelessWidget {
               color: StaticColor.textPrimary,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(
             subtitle,
             style: AppTypography.b4.copyWith(color: StaticColor.primaryPink),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: List.generate(5, (index) {
@@ -64,10 +66,10 @@ class QuestionEmojiRatingWidget extends StatelessWidget {
                       _emojis[index],
                       style: const TextStyle(fontSize: 24),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     Container(
-                      width: 22,
-                      height: 22,
+                      width: 22.w,
+                      height: 22.w,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
@@ -80,8 +82,8 @@ class QuestionEmojiRatingWidget extends StatelessWidget {
                       alignment: Alignment.center,
                       child: isSelected
                           ? Container(
-                              width: 12,
-                              height: 12,
+                              width: 12.w,
+                              height: 12.w,
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: StaticColor.primaryPink,
@@ -89,7 +91,7 @@ class QuestionEmojiRatingWidget extends StatelessWidget {
                             )
                           : null,
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4.h),
                     Text(
                       val.toString(),
                       style: AppTypography.b3.copyWith(

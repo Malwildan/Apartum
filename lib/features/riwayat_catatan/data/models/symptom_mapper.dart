@@ -1,6 +1,6 @@
 import 'package:apartum/features/riwayat_catatan/data/models/symptom_request_model.dart';
 import 'package:apartum/features/riwayat_catatan/domain/entities/symptom_entity.dart';
-import 'package:apartum/features/riwayat_catatan/presentation/riwayat_catatan_answer_data.dart';
+import 'package:apartum/features/riwayat_catatan/domain/entities/riwayat_catatan_answer_data.dart';
 
 class SymptomAnswerBundle {
   final Bagian1AnswerData bagian1;

@@ -3,8 +3,9 @@ import 'package:apartum/core/global_widget/app_inputfield.dart';
 import 'package:apartum/core/global_widget/status_card_widget.dart';
 import 'package:apartum/core/theme/app_typography.dart';
 import 'package:apartum/core/theme/app_static_color.dart';
-import 'package:apartum/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:apartum/features/auth/presentation/cubit/auth_state.dart';
+import 'package:apartum/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:apartum/features/auth/presentation/bloc/auth_event.dart';
+import 'package:apartum/features/auth/presentation/bloc/auth_state.dart';
 import 'package:apartum/features/riwayat_catatan/presentation/bloc/symptom_bloc.dart';
 import 'package:apartum/features/riwayat_catatan/presentation/bloc/symptom_event.dart';
 import 'package:flutter/material.dart';
@@ -76,11 +77,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       context: context,
       barrierDismissible: false,
       builder: (_) => BlocProvider.value(
-        value: context.read<AuthCubit>(),
+        value: context.read<AuthBloc>(),
         child: Dialog(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          child: BlocBuilder<AuthCubit, AuthState>(
+          child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
               if (state is AuthLoading) {
                 return const Center(
@@ -118,13 +119,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final yyyymmdd =
         '${_selectedDate!.year}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.day.toString().padLeft(2, '0')}';
 
-    context.read<AuthCubit>().register(
+    context.read<AuthBloc>().add(RegisterEvent(
       name: _nameController.text.trim(),
       birthDate: yyyymmdd,
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
       confirmPassword: _confirmPasswordController.text.trim(),
-    );
+    ));
   }
 
   @override

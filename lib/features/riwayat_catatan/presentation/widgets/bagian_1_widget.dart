@@ -1,9 +1,12 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:apartum/core/global_widget/app_button.dart';
 import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:apartum/core/theme/app_typography.dart';
-import 'package:apartum/features/riwayat_catatan/presentation/riwayat_catatan_answer_data.dart';
+import 'package:apartum/features/riwayat_catatan/domain/entities/riwayat_catatan_answer_data.dart';
 import 'package:apartum/features/riwayat_catatan/presentation/widgets/question_radio_widget.dart';
-import 'package:flutter/material.dart';
 
 class Bagian1Widget extends StatefulWidget {
   final Function(Bagian1AnswerData) onNext;
@@ -15,16 +18,16 @@ class Bagian1Widget extends StatefulWidget {
 }
 
 class _Bagian1WidgetState extends State<Bagian1Widget> {
-  String? q1Answer;
-  String? q2Answer;
-  String? q3Answer;
-  String? q4Answer;
+  String? _q1Answer;
+  String? _q2Answer;
+  String? _q3Answer;
+  String? _q4Answer;
 
   bool get _isAllAnswered =>
-      q1Answer != null &&
-      q2Answer != null &&
-      q3Answer != null &&
-      q4Answer != null;
+      _q1Answer != null &&
+      _q2Answer != null &&
+      _q3Answer != null &&
+      _q4Answer != null;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class _Bagian1WidgetState extends State<Bagian1Widget> {
       width: double.infinity,
       decoration: BoxDecoration(
         color: StaticColor.surface,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20.r),
         border: Border.all(color: StaticColor.divider.withValues(alpha: 0.5)),
         boxShadow: const [
           BoxShadow(
@@ -46,7 +49,7 @@ class _Bagian1WidgetState extends State<Bagian1Widget> {
         children: [
           // Fixed Header
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
+            padding: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 16.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -54,27 +57,28 @@ class _Bagian1WidgetState extends State<Bagian1Widget> {
                   'Bagian 1 – Pendarahan',
                   style: AppTypography.h3.copyWith(fontWeight: FontWeight.w700),
                 ),
-                const SizedBox(height: 4),
-                Text(
+                SizedBox(height: 4.h),
+                AutoSizeText(
+                  maxLines: 1,
                   'Catat semua gejala dan kondisi yang terjadi hari ini',
                   style: AppTypography.b3.copyWith(
                     color: StaticColor.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 SizedBox(
                   width: double.infinity,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: const LinearProgressIndicator(
+                    borderRadius: BorderRadius.circular(4.r),
+                    child: LinearProgressIndicator(
                       value: 0.33,
-                      backgroundColor: Color(0xFFE5E5E5),
+                      backgroundColor: const Color(0xFFE5E5E5),
                       color: StaticColor.primaryPink,
-                      minHeight: 6,
+                      minHeight: 6.h,
                     ),
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 Center(
                   child: Text(
                     'Langkah 1 dari 3',
@@ -90,7 +94,7 @@ class _Bagian1WidgetState extends State<Bagian1Widget> {
           // Scrollable Content
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               children: [
                 QuestionRadioWidget(
                   title: 'Berapa pembalut yang dipakai?',
@@ -101,19 +105,15 @@ class _Bagian1WidgetState extends State<Bagian1Widget> {
                     '1 pembalut / 2 jam',
                     'Lebih cepat dari itu',
                   ],
-                  selectedOption: q1Answer,
-                  onChanged: (value) {
-                    setState(() => q1Answer = value);
-                  },
+                  selectedOption: _q1Answer,
+                  onChanged: (value) => setState(() => _q1Answer = value),
                 ),
                 QuestionRadioWidget(
                   title: 'Warna darah yang keluar',
                   subtitle: '*wajib diisi, pilih salah satu',
                   options: const ['Merah tua', 'Merah normal', 'Merah terang'],
-                  selectedOption: q2Answer,
-                  onChanged: (value) {
-                    setState(() => q2Answer = value);
-                  },
+                  selectedOption: _q2Answer,
+                  onChanged: (value) => setState(() => _q2Answer = value),
                 ),
                 QuestionRadioWidget(
                   title: 'Besar ukuran gumpalan darah',
@@ -124,10 +124,8 @@ class _Bagian1WidgetState extends State<Bagian1Widget> {
                     'Koin besar',
                     'Bola pingpong',
                   ],
-                  selectedOption: q3Answer,
-                  onChanged: (value) {
-                    setState(() => q3Answer = value);
-                  },
+                  selectedOption: _q3Answer,
+                  onChanged: (value) => setState(() => _q3Answer = value),
                 ),
                 QuestionRadioWidget(
                   title: 'Bau cairan dari jalan lahir',
@@ -137,10 +135,8 @@ class _Bagian1WidgetState extends State<Bagian1Widget> {
                     'Berbau sedikit',
                     'Berbau menyengat',
                   ],
-                  selectedOption: q4Answer,
-                  onChanged: (value) {
-                    setState(() => q4Answer = value);
-                  },
+                  selectedOption: _q4Answer,
+                  onChanged: (value) => setState(() => _q4Answer = value),
                 ),
               ],
             ),
@@ -148,7 +144,7 @@ class _Bagian1WidgetState extends State<Bagian1Widget> {
 
           // Fixed Bottom Button
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(20.w),
             child: SizedBox(
               width: double.infinity,
               child: AppButton(
@@ -156,10 +152,10 @@ class _Bagian1WidgetState extends State<Bagian1Widget> {
                 trailing: const Icon(Icons.arrow_forward),
                 onPressed: _isAllAnswered
                     ? () => widget.onNext(Bagian1AnswerData(
-                          pembalut: q1Answer,
-                          warnaDarah: q2Answer,
-                          gumpalan: q3Answer,
-                          bau: q4Answer,
+                          pembalut: _q1Answer,
+                          warnaDarah: _q2Answer,
+                          gumpalan: _q3Answer,
+                          bau: _q4Answer,
                         ))
                     : null,
               ),

@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:apartum/core/theme/app_typography.dart';
-import 'package:flutter/material.dart';
 
 class QuestionRadioWidget extends StatelessWidget {
   final String title;
@@ -21,11 +23,11 @@ class QuestionRadioWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: 16.h),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: const Color(0xFFF7F7F9),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: const Color(0xFFEBEBEB)),
       ),
       child: Column(
@@ -38,24 +40,24 @@ class QuestionRadioWidget extends StatelessWidget {
               color: StaticColor.textPrimary,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(
             subtitle,
             style: AppTypography.b4.copyWith(color: StaticColor.primaryPink),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           ...options.map((opt) {
             final isSelected = selectedOption == opt;
             return GestureDetector(
               onTap: () => onChanged(opt),
               behavior: HitTestBehavior.opaque,
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 12),
+                padding: EdgeInsets.only(bottom: 12.h),
                 child: Row(
                   children: [
                     Container(
-                      width: 22,
-                      height: 22,
+                      width: 22.w,
+                      height: 22.w,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
@@ -68,8 +70,8 @@ class QuestionRadioWidget extends StatelessWidget {
                       alignment: Alignment.center,
                       child: isSelected
                           ? Container(
-                              width: 12,
-                              height: 12,
+                              width: 12.w,
+                              height: 12.w,
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: StaticColor.primaryPink,
@@ -77,7 +79,7 @@ class QuestionRadioWidget extends StatelessWidget {
                             )
                           : null,
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12.w),
                     Expanded(
                       child: Text(
                         opt,

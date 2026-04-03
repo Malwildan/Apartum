@@ -24,7 +24,6 @@ class ApartumTheme {
       colorScheme: colorScheme,
       scaffoldBackgroundColor: StaticColor.background,
 
-      // ── AppBar ──
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.white,
         foregroundColor: StaticColor.textPrimary,
@@ -39,7 +38,6 @@ class ApartumTheme {
         iconTheme: const IconThemeData(color: StaticColor.textPrimary),
       ),
 
-      // ── Elevated Button ──
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: StaticColor.primaryPink,
@@ -58,7 +56,6 @@ class ApartumTheme {
         ),
       ),
 
-      // ── Outlined Button ──
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: StaticColor.primaryPink,
@@ -74,18 +71,6 @@ class ApartumTheme {
         ),
       ),
 
-      // ── Text Button ──
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          foregroundColor: StaticColor.primaryPink,
-          textStyle: GoogleFonts.plusJakartaSans(
-            fontSize: 15.sp,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
-
-      // ── Input / TextField ──
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: const Color(0xFFF1F3F6),
@@ -124,7 +109,6 @@ class ApartumTheme {
         ),
       ),
 
-      // ── Card ──
       cardTheme: CardThemeData(
         color: Colors.white,
         elevation: 0,
@@ -134,57 +118,16 @@ class ApartumTheme {
         margin: EdgeInsets.symmetric(horizontal: 0, vertical: 6.h),
       ),
 
-      // ── Bottom Navigation Bar ──
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: Colors.white,
-        selectedItemColor: StaticColor.primaryPink,
-        unselectedItemColor: StaticColor.textMuted,
-        type: BottomNavigationBarType.fixed,
-        elevation: 8,
-        selectedLabelStyle: GoogleFonts.plusJakartaSans(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w600,
-        ),
-        unselectedLabelStyle: GoogleFonts.plusJakartaSans(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
 
-      // ── NavigationBar (M3) ──
-      navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: Colors.white,
-        indicatorColor: StaticColor.primaryPink.withOpacity(0.12),
-        labelTextStyle: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return GoogleFonts.plusJakartaSans(
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w600,
-              color: StaticColor.primaryPink,
-            );
-          }
-          return GoogleFonts.plusJakartaSans(
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w400,
-            color: StaticColor.textMuted,
-          );
-        }),
-        iconTheme: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return const IconThemeData(color: StaticColor.primaryPink);
-          }
-          return const IconThemeData(color: StaticColor.textMuted);
-        }),
-      ),
 
-      // ── Text Selection ──
+
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: StaticColor.primaryPink,
         selectionColor: StaticColor.primaryPink.withOpacity(0.25),
         selectionHandleColor: StaticColor.primaryPinkDark,
       ),
 
-      // ── DatePicker ──
+
       datePickerTheme: DatePickerThemeData(
         backgroundColor: StaticColor.surface,
         surfaceTintColor: StaticColor.surface,
@@ -236,7 +179,6 @@ class ApartumTheme {
         ),
       ),
 
-      // ── SnackBar ──
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         actionTextColor: StaticColor.warningYellow,
@@ -245,7 +187,6 @@ class ApartumTheme {
         ),
       ),
 
-      // ── Chip ──
       chipTheme: ChipThemeData(
         backgroundColor: const Color(0xFFF1F3F6),
         selectedColor: StaticColor.primaryPink.withOpacity(0.12),
@@ -260,14 +201,12 @@ class ApartumTheme {
         side: BorderSide.none,
       ),
 
-      // ── Divider ──
       dividerTheme: const DividerThemeData(
         color: Color(0xFFEDEFF2),
         thickness: 1,
         space: 1,
       ),
 
-      // ── Dialog ──
       dialogTheme: DialogThemeData(
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
@@ -281,34 +220,11 @@ class ApartumTheme {
         ),
       ),
 
-      // ── BottomSheet ──
       bottomSheetTheme: BottomSheetThemeData(
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
-        ),
-      ),
-
-      // ── FloatingActionButton ──
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: StaticColor.primaryPink,
-        foregroundColor: Colors.white,
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.r),
-        ),
-      ),
-
-      // ── Tooltip ──
-      tooltipTheme: TooltipThemeData(
-        decoration: BoxDecoration(
-          color: StaticColor.textPrimary,
-          borderRadius: BorderRadius.circular(8.r),
-        ),
-        textStyle: GoogleFonts.plusJakartaSans(
-          color: Colors.white,
-          fontSize: 13.sp,
         ),
       ),
 
@@ -318,19 +234,7 @@ class ApartumTheme {
         linearTrackColor: Color(0xFFEDEFF2),
       ),
 
-      // ── Switch / Checkbox / Radio ──
-      switchTheme: SwitchThemeData(
-        thumbColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) return Colors.white;
-          return const Color(0xFFB0B8C2);
-        }),
-        trackColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return StaticColor.primaryPink;
-          }
-          return const Color(0xFFE5E7EB);
-        }),
-      ),
+      // ── Checkbox / Radio ──
       checkboxTheme: CheckboxThemeData(
         fillColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
@@ -348,36 +252,6 @@ class ApartumTheme {
           }
           return StaticColor.textMuted;
         }),
-      ),
-
-      // ── TabBar ──
-      tabBarTheme: TabBarThemeData(
-        labelColor: StaticColor.primaryPink,
-        unselectedLabelColor: StaticColor.textMuted,
-        indicatorColor: StaticColor.primaryPink,
-        labelStyle: GoogleFonts.plusJakartaSans(
-          fontSize: 14.sp,
-          fontWeight: FontWeight.w600,
-        ),
-        unselectedLabelStyle: GoogleFonts.plusJakartaSans(
-          fontSize: 14.sp,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-
-      // ── ListTile ──
-      listTileTheme: ListTileThemeData(
-        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
-        titleTextStyle: GoogleFonts.plusJakartaSans(
-          fontSize: 15.sp,
-          fontWeight: FontWeight.w500,
-          color: StaticColor.textPrimary,
-        ),
-        subtitleTextStyle: GoogleFonts.plusJakartaSans(
-          fontSize: 13.sp,
-          fontWeight: FontWeight.w400,
-          color: StaticColor.textMuted,
-        ),
       ),
     );
   }

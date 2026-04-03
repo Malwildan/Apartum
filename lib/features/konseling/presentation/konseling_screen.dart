@@ -2,8 +2,9 @@ import 'package:apartum/core/global_widget/bottom_nav_widget.dart';
 import 'package:apartum/core/global_widget/doctor_card_widget.dart';
 import 'package:apartum/core/theme/app_typography.dart';
 import 'package:apartum/core/theme/app_static_color.dart';
-import 'package:apartum/features/konseling/presentation/cubit/konseling_cubit.dart';
-import 'package:apartum/features/konseling/presentation/cubit/konseling_state.dart';
+import 'package:apartum/features/konseling/presentation/bloc/konseling_bloc.dart';
+import 'package:apartum/features/konseling/presentation/bloc/konseling_event.dart';
+import 'package:apartum/features/konseling/presentation/bloc/konseling_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,7 +22,9 @@ class _KonselingscreenState extends State<Konselingscreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<KonselingCubit>().fetchPsychologists();
+      context
+          .read<KonselingBloc>()
+          .add(FetchPsychologistsEvent());
     });
   }
 
@@ -81,7 +84,7 @@ class _KonselingscreenState extends State<Konselingscreen> {
             ),
             const SizedBox(height: 12),
             Expanded(
-              child: BlocBuilder<KonselingCubit, KonselingState>(
+              child: BlocBuilder<KonselingBloc, KonselingState>(
                 builder: (context, state) {
                   if (state is KonselingLoading) {
                     return const Center(child: CircularProgressIndicator());

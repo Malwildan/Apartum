@@ -92,9 +92,7 @@ class SleepBarWidget extends StatelessWidget {
       );
     }
 
-    // Filled bar represents SLEEP time: segments before and after the awake window
-    // are painted with barColor, while [topPx, topPx+heightPx] shows only the
-    // background track (the awake/empty region).
+    
     final topSegmentHeight = topPx.clamp(0.0, availableHeight);
     final bottomStart = (topPx + heightPx).clamp(0.0, availableHeight);
     final bottomSegmentHeight = (availableHeight - bottomStart).clamp(0.0, availableHeight);

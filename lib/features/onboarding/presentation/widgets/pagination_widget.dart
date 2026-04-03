@@ -1,6 +1,7 @@
 import 'package:apartum/core/theme/app_typography.dart';
 import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PaginationWidget extends StatefulWidget {
   final int pageCount;
@@ -35,6 +36,14 @@ class _PaginationState extends State<PaginationWidget> {
     _currentPage = widget.initialPage;
   }
 
+  @override
+  void didUpdateWidget(covariant PaginationWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialPage != widget.initialPage) {
+      _currentPage = widget.initialPage;
+    }
+  }
+
   void _previousPage() {
     if (_currentPage > 0) {
       setState(() => _currentPage--);
@@ -56,16 +65,19 @@ class _PaginationState extends State<PaginationWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final double arrowSize = 48.r;
+    final double pageWidth = 48.w;
+    final double pageHeight = 42.h;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Previous arrow button
         GestureDetector(
           onTap: _previousPage,
           child: Container(
-            width: 48,
-            height: 48,
+            width: arrowSize,
+            height: arrowSize,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: _currentPage == 0 ? null : widget.activeBgButtonColor,
@@ -76,25 +88,24 @@ class _PaginationState extends State<PaginationWidget> {
                 color: _currentPage == 0
                     ? widget.inactiveArrowColor
                     : widget.activeColor,
-                size: 24,
+                size: 24.sp,
               ),
             ),
           ),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: 12.w),
 
-        // Page indicators
         ...List.generate(
           widget.pageCount,
           (index) => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: GestureDetector(
               onTap: () => _goToPage(index),
               child: Container(
-                width: 48,
-                height: 42,
+                width: pageWidth,
+                height: pageHeight,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
+                  borderRadius: BorderRadius.circular(100.r),
                   color: _currentPage == index ? widget.activeColor : null,
                 ),
                 child: Center(
@@ -111,14 +122,13 @@ class _PaginationState extends State<PaginationWidget> {
             ),
           ),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: 12.w),
 
-        // Next arrow button
         GestureDetector(
           onTap: _nextPage,
           child: Container(
-            width: 48,
-            height: 48,
+            width: arrowSize,
+            height: arrowSize,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: _currentPage == widget.pageCount - 1
@@ -131,7 +141,7 @@ class _PaginationState extends State<PaginationWidget> {
                 color: _currentPage == widget.pageCount - 1
                     ? widget.inactiveArrowColor
                     : widget.activeColor,
-                size: 24,
+                size: 24.sp,
               ),
             ),
           ),

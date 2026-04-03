@@ -1,9 +1,12 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:apartum/core/global_widget/app_button.dart';
 import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:apartum/core/theme/app_typography.dart';
-import 'package:apartum/features/riwayat_catatan/presentation/riwayat_catatan_answer_data.dart';
+import 'package:apartum/features/riwayat_catatan/domain/entities/riwayat_catatan_answer_data.dart';
 import 'package:apartum/features/riwayat_catatan/presentation/widgets/question_chip_selection_widget.dart';
-import 'package:flutter/material.dart';
 
 class Bagian3Widget extends StatefulWidget {
   final VoidCallback onBack;
@@ -62,7 +65,7 @@ class _Bagian3WidgetState extends State<Bagian3Widget> {
       width: double.infinity,
       decoration: BoxDecoration(
         color: StaticColor.surface,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20.r),
         border: Border.all(color: StaticColor.divider.withValues(alpha: 0.5)),
         boxShadow: const [
           BoxShadow(
@@ -76,7 +79,7 @@ class _Bagian3WidgetState extends State<Bagian3Widget> {
         children: [
           // Fixed Header
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
+            padding: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 16.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -84,27 +87,27 @@ class _Bagian3WidgetState extends State<Bagian3Widget> {
                   'Bagian 3 – Kondisi Emosi',
                   style: AppTypography.h3.copyWith(fontWeight: FontWeight.w700),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4.h),
                 Text(
                   'Bagaimana perasaan Ibu hari ini?\n(Pilih maksimal 3 per kategori)',
                   style: AppTypography.b3.copyWith(
                     color: StaticColor.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 SizedBox(
                   width: double.infinity,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: const LinearProgressIndicator(
+                    borderRadius: BorderRadius.circular(4.r),
+                    child: LinearProgressIndicator(
                       value: 1.0,
-                      backgroundColor: Color(0xFFE5E5E5),
+                      backgroundColor: const Color(0xFFE5E5E5),
                       color: StaticColor.primaryPink,
-                      minHeight: 6,
+                      minHeight: 6.h,
                     ),
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 Center(
                   child: Text(
                     'Langkah 3 dari 3',
@@ -120,7 +123,7 @@ class _Bagian3WidgetState extends State<Bagian3Widget> {
           // Scrollable Content
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               children: [
                 QuestionChipSelectionWidget(
                   title: 'Emosi Positif',
@@ -146,30 +149,34 @@ class _Bagian3WidgetState extends State<Bagian3Widget> {
 
           // Fixed Bottom Button
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(20.w),
             child: Row(
               children: [
                 SizedBox(
-                  width: 130,
-                  height: 48,
+                  width: 130.w,
+                  height: 48.h,
                   child: OutlinedButton(
                     onPressed: widget.onBack,
                     style: OutlinedButton.styleFrom(
                       foregroundColor: StaticColor.primaryPink,
                       side: const BorderSide(color: StaticColor.primaryPink),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(999),
+                        borderRadius: BorderRadius.circular(999.r),
                       ),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.arrow_back, size: 20),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Kembali',
-                          style: AppTypography.b2.copyWith(
-                            fontWeight: FontWeight.w600,
+                        Icon(Icons.arrow_back, size: 20.w),
+                        SizedBox(width: 8.w),
+                        Flexible(
+                          child: AutoSizeText(
+                            'Kembali',
+                            style: AppTypography.b2.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                            maxLines: 1,
+                            minFontSize: 10,
                           ),
                         ),
                       ],

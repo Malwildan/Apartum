@@ -8,12 +8,7 @@ class ProfileModel extends ProfileEntity {
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
-    // The API might nest the user under 'data' or 'user' key, or straight.
-    // Based on the register endpoint, it looks like {"success": true, "data": {"user": {...}}}
-    // Here we assume it directly maps the response data object if returned from the API wrapper
-    // or we handle the nested traversal here flexibly.
-
-    // Fallback logic to grab the deepest nested object where 'email' or 'name' actually lives.
+    
     Map<String, dynamic> userData = json;
 
     if (json.containsKey('data')) {

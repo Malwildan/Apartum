@@ -17,90 +17,106 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentIndex = 0;
 
+  bool get _isLastPage => _currentIndex == onboardingData.length - 1;
+
   @override
   Widget build(BuildContext context) {
     final item = onboardingData[_currentIndex];
 
     return Scaffold(
       backgroundColor: StaticColor.background,
-      body: Center(
-        child: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // SizedBox(height: 24.h),
-                Expanded(
-                  child: Center(
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final bool isCompactHeight = constraints.maxHeight < 720;
+            final double imageHeight =
+                constraints.maxHeight * (isCompactHeight ? 0.32 : 0.38);
+            final double maxContentWidth = 340.w;
+
+            return Padding(
+              padding: EdgeInsets.fromLTRB(24.w, 12.h, 24.w, 20.h),
+              child: Column(
+                children: [
+                  SizedBox(height: isCompactHeight ? 8.h : 20.h),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    child: SizedBox(
+                      key: ValueKey<String>(item.image),
+                      height: imageHeight,
+                      child: Image.asset(item.image, fit: BoxFit.contain),
+                    ),
+                  ),
+                  SizedBox(height: isCompactHeight ? 28.h : 44.h),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: maxContentWidth),
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 250),
-                      child: Image.asset(
-                        item.image,
-                        key: ValueKey<String>(item.image),
-                        fit: BoxFit.contain,
+                      child: AutoSizeText(
+                        item.title,
+                        key: ValueKey<String>(item.title),
+                        minFontSize: 24,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: AppTypography.h1.copyWith(
+                          color: StaticColor.primaryPink,
+                          height: 1.2,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: 48.h),
-                SizedBox(
-                  height: 156.h,
-                  child: Column(
-                    children: [
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 250),
-                        child: Text(
-                          item.title,
-                          key: ValueKey<String>(item.title),
-                          textAlign: TextAlign.center,
-                          style: AppTypography.h1.copyWith(
-                            color: StaticColor.primaryPink,
+                  SizedBox(height: 18.h),
+                  Expanded(
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: maxContentWidth),
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 250),
+                          child: AutoSizeText(
+                            item.description,
+                            key: ValueKey<String>(item.description),
+                            minFontSize: 14,
+                            maxLines: 4,
+                            textAlign: TextAlign.center,
+                            style: AppTypography.b1.copyWith(
+                              color: StaticColor.textPrimary,
+                              height: 1.35,
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 16.h),
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 250),
-                        child: AutoSizeText(
-                          item.description,
-                          //minFontSize: 10,
-                          maxLines: 4,
-                          key: ValueKey<String>(item.description),
-                          textAlign: TextAlign.center,
-                          style: AppTypography.b1.copyWith(
-                            color: StaticColor.textPrimary,
-                            height: 1.4,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-                SizedBox(height: 16.h),
-                Opacity(
-                  opacity: _currentIndex == onboardingData.length - 1 ? 1 : 0,
-                  child: AppButton(
-                    label: 'Mulai Sekarang',
-                    onPressed: () {
-                      Navigator.of(context).pushReplacementNamed('/login');
-                    },
+                  AnimatedSize(
+                    duration: const Duration(milliseconds: 250),
+                    curve: Curves.easeInOut,
+                    child: SizedBox(
+                      height: _isLastPage ? 52.h : 0,
+                      child: _isLastPage
+                          ? AppButton(
+                              label: 'Mulai Sekarang',
+                              height: 52.h,
+                              onPressed: () {
+                                Navigator.of(
+                                  context,
+                                ).pushReplacementNamed('/login');
+                              },
+                            )
+                          : const SizedBox.shrink(),
+                    ),
                   ),
-                ),
-                SizedBox(height: 32.h),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 12.h),
-                  child: PaginationWidget(
+                  SizedBox(height: _isLastPage ? 22.h : 28.h),
+                  PaginationWidget(
                     pageCount: onboardingData.length,
                     initialPage: _currentIndex,
                     onPageChanged: (page) {
                       setState(() => _currentIndex = page);
                     },
                   ),
-                ),
-              ],
-            ),
-          ),
+                  SizedBox(height: 54.h)
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

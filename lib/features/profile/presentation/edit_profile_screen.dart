@@ -3,8 +3,9 @@ import 'package:apartum/core/global_widget/app_inputfield.dart';
 import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:apartum/features/profile/presentation/cubit/profile_cubit.dart';
-import 'package:apartum/features/profile/presentation/cubit/profile_state.dart';
+import 'package:apartum/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:apartum/features/profile/presentation/bloc/profile_event.dart';
+import 'package:apartum/features/profile/presentation/bloc/profile_state.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -27,8 +28,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    // Assuming context is available because flutter_bloc injects high up
-    final profileState = context.read<ProfileCubit>().state;
+   
+    final profileState = context.read<ProfileBloc>().state;
     if (profileState is ProfileLoaded || profileState is ProfileUpdateSuccess) {
       final p = profileState is ProfileLoaded
           ? profileState.profile
@@ -60,7 +61,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ProfileCubit, ProfileState>(
+    return BlocConsumer<ProfileBloc, ProfileState>(
       listener: (context, state) {
         if (state is ProfileUpdateSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -107,7 +108,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   controller: _tanggalPersalinanController,
                   enabled: false,
                   readOnly: true,
-                  hintText: 'wildatussakinah9@gmail.com',
                   leading: Icon(Icons.calendar_month_outlined),
                   statusText:
                       '*Anda tidak dapat mengedit atau mengubah bagian ini.',
@@ -121,7 +121,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 AppInputField(
                   label: 'Username',
                   controller: _nameController,
-                  hintText: 'Wildatus Sakinah',
                   hideHintOnFocus: true,
                   leading: Icon(Icons.face_outlined),
                   trailing: Icon(Icons.edit_outlined),
@@ -139,18 +138,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       label: isLoading ? 'Menyimpan...' : 'Simpan Perubahan',
                       onPressed: canClick
                           ? () {
-                              context.read<ProfileCubit>().updateProfileName(
-                                _nameController.text.trim(),
+                              context.read<ProfileBloc>().add(
+                                UpdateProfileNameEvent(_nameController.text.trim()),
                               );
                             }
                           : null,
-                      borderRadius: 24,
-                      backgroundColor: canClick
-                          ? StaticColor.primaryPink
-                          : StaticColor.disabled,
-                      foregroundColor: canClick
-                          ? Colors.white
-                          : StaticColor.disabledText,
                     );
                   },
                 ),

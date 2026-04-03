@@ -1,6 +1,7 @@
-import 'package:apartum/features/riwayat_catatan/domain/entities/sleep_daily_entity.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:equatable/equatable.dart';
+
+import 'package:apartum/features/riwayat_catatan/domain/entities/sleep_daily_entity.dart';
 
 enum SleepStatus { initial, loading, loaded, submitting, submitted, error }
 

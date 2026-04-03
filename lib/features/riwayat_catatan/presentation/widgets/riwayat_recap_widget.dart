@@ -1,12 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:apartum/core/global_widget/app_button.dart';
 import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:apartum/core/theme/app_typography.dart';
-import 'package:apartum/features/riwayat_catatan/presentation/riwayat_catatan_answer_data.dart';
+import 'package:apartum/features/riwayat_catatan/domain/entities/riwayat_catatan_answer_data.dart';
 import 'package:apartum/features/riwayat_catatan/presentation/widgets/question_checkbox_widget.dart';
 import 'package:apartum/features/riwayat_catatan/presentation/widgets/question_chip_selection_widget.dart';
 import 'package:apartum/features/riwayat_catatan/presentation/widgets/question_emoji_rating_widget.dart';
 import 'package:apartum/features/riwayat_catatan/presentation/widgets/question_radio_widget.dart';
-import 'package:flutter/material.dart';
 
 class RiwayatRecapWidget extends StatelessWidget {
   final Bagian1AnswerData bagian1;
@@ -50,7 +52,7 @@ class RiwayatRecapWidget extends StatelessWidget {
           pages: _bagian3Pages(),
         ),
         if (isEditable && onConfirm != null) ...[
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           AppButton(
             label: 'Konfirmasi Perubahan',
             onPressed: onConfirm,
@@ -355,12 +357,12 @@ class _RecapSectionState extends State<_RecapSection> {
           widget.title,
           style: AppTypography.h3.copyWith(fontWeight: FontWeight.w700),
         ),
-        const SizedBox(height: 2),
+        SizedBox(height: 2.h),
         Text(
           'Riwayat jawaban',
           style: AppTypography.b3.copyWith(color: StaticColor.textMuted),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -369,9 +371,9 @@ class _RecapSectionState extends State<_RecapSection> {
               enabled: _page > 0,
               onTap: () => setState(() => _page--),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             Expanded(child: widget.pages[_page]),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             _NavArrow(
               icon: Icons.arrow_forward_ios_rounded,
               enabled: _page < widget.pages.length - 1,
@@ -400,8 +402,8 @@ class _NavArrow extends StatelessWidget {
     return GestureDetector(
       onTap: enabled ? onTap : null,
       child: Container(
-        width: 32,
-        height: 32,
+        width: 32.w,
+        height: 32.w,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: enabled
@@ -411,7 +413,7 @@ class _NavArrow extends StatelessWidget {
         alignment: Alignment.center,
         child: Icon(
           icon,
-          size: 15,
+          size: 15.w,
           color: StaticColor.surface,
         ),
       ),

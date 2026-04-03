@@ -1,7 +1,7 @@
 import 'package:apartum/core/theme/app_typography.dart';
 import 'package:apartum/core/theme/app_static_color.dart';
-import 'package:apartum/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:apartum/features/auth/presentation/cubit/auth_state.dart';
+import 'package:apartum/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:apartum/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -84,11 +84,10 @@ class _SplashScreenState extends State<SplashScreen>
       return;
     }
 
-    var authState = context.read<AuthCubit>().state;
+    var authState = context.read<AuthBloc>().state;
 
-    // If the storage check is taking longer than the animation, wait for it
     if (authState is AuthInitial) {
-      authState = await context.read<AuthCubit>().stream.firstWhere(
+      authState = await context.read<AuthBloc>().stream.firstWhere(
         (state) => state is! AuthInitial && state is! AuthLoading,
       );
     }

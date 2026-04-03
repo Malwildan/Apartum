@@ -1,6 +1,7 @@
-import 'package:apartum/features/riwayat_catatan/domain/entities/symptom_request_entity.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:equatable/equatable.dart';
+
+import 'package:apartum/features/riwayat_catatan/domain/entities/symptom_request_entity.dart';
 
 @immutable
 sealed class SymptomEvent extends Equatable {

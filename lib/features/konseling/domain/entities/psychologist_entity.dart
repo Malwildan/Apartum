@@ -6,7 +6,7 @@ class PsychologistEntity {
   final String title;
   final String job;
   final int experienceYears;
-  final num priceIdr; // Using num just in case the API ever returns decimal/double JSON types
+  final int priceIdr;
   final String photoUrl;
   final List<ScheduleEntity>? schedules;
 

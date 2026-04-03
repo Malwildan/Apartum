@@ -1,8 +1,9 @@
+import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:apartum/features/riwayat_catatan/domain/repositories/symptom_repository.dart';
 import 'package:apartum/features/riwayat_catatan/presentation/bloc/symptom_event.dart';
 import 'package:apartum/features/riwayat_catatan/presentation/bloc/symptom_state.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bloc_concurrency/bloc_concurrency.dart';
 
 class SymptomBloc extends Bloc<SymptomEvent, SymptomState> {
   final SymptomRepository _repository;

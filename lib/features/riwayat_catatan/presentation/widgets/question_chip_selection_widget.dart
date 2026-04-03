@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:apartum/core/theme/app_typography.dart';
-import 'package:flutter/material.dart';
 
 class QuestionChipSelectionWidget extends StatelessWidget {
   final String title;
@@ -23,11 +25,11 @@ class QuestionChipSelectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: 16.h),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: Colors.black.withValues(alpha: 0.05)),
       ),
       child: Column(
@@ -40,20 +42,20 @@ class QuestionChipSelectionWidget extends StatelessWidget {
               color: StaticColor.textPrimary,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Wrap(
-            spacing: 8,
-            runSpacing: 8,
+            spacing: 8.w,
+            runSpacing: 8.h,
             children: options.map((opt) {
               final isSelected = selectedOptions.contains(opt);
               return GestureDetector(
                 onTap: () => onToggle(opt),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                   decoration: BoxDecoration(
                     color: isSelected ? primaryColor : Colors.white,
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(20.r),
                     border: Border.all(
                       color: isSelected ? Colors.transparent : primaryColor,
                     ),

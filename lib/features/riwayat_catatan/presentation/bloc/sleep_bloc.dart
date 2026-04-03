@@ -1,8 +1,9 @@
+import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:apartum/features/riwayat_catatan/domain/repositories/sleep_repository.dart';
 import 'package:apartum/features/riwayat_catatan/presentation/bloc/sleep_event.dart';
 import 'package:apartum/features/riwayat_catatan/presentation/bloc/sleep_state.dart';
-import 'package:bloc_concurrency/bloc_concurrency.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SleepBloc extends Bloc<SleepEvent, SleepState> {
   final SleepRepository _repository;

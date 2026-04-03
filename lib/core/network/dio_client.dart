@@ -22,7 +22,6 @@ class DioClient {
       ),
     );
 
-    // ── Auth interceptor ──
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
@@ -33,11 +32,11 @@ class DioClient {
           handler.next(options);
         },
         onError: (error, handler) async {
-          // Auto-refresh on 401
+      
           if (error.response?.statusCode == 401) {
             final refreshed = await _tryRefreshToken();
             if (refreshed) {
-              // Retry original request with the new token
+              
               final retryOptions = error.requestOptions;
               final newToken = await _tokenStorage.getAccessToken();
               retryOptions.headers['Authorization'] = 'Bearer $newToken';
@@ -54,7 +53,6 @@ class DioClient {
       ),
     );
 
-    // ── Logging (debug only) ──
     if (kDebugMode) {
       dio.interceptors.add(
         LogInterceptor(
@@ -71,7 +69,7 @@ class DioClient {
     if (refreshToken == null) return false;
 
     try {
-      // Use a fresh Dio instance to avoid interceptor loops
+ 
       final freshDio = Dio(BaseOptions(baseUrl: _baseUrl));
       final response = await freshDio.post(
         '/auth/refresh',
@@ -87,7 +85,7 @@ class DioClient {
         return true;
       }
     } catch (_) {
-      // Refresh failed — user must re-login
+  
       await _tokenStorage.clearAll();
     }
     return false;

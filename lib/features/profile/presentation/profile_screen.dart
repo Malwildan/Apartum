@@ -3,12 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:apartum/core/theme/app_typography.dart';
 import 'package:apartum/core/theme/app_static_color.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:apartum/features/profile/presentation/widgets/profile_header_widget.dart';
+import 'package:apartum/features/profile/presentation/widgets/profile_row_widget.dart';
+import 'package:apartum/features/profile/presentation/widgets/preference_row_widget.dart';
 import 'package:apartum/core/global_widget/bottom_nav_widget.dart';
-import 'package:apartum/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:apartum/features/profile/presentation/cubit/profile_cubit.dart';
-import 'package:apartum/features/profile/presentation/cubit/profile_state.dart';
+import 'package:apartum/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:apartum/features/auth/presentation/bloc/auth_event.dart';
+import 'package:apartum/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:apartum/features/profile/presentation/bloc/profile_event.dart';
+import 'package:apartum/features/profile/presentation/bloc/profile_state.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -23,9 +26,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    // Schedule a profile fetch as soon as the widget enters the tree
+  
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ProfileCubit>().fetchProfile();
+      context.read<ProfileBloc>().add(const FetchProfileEvent());
     });
   }
 
@@ -49,7 +52,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
         },
       ),
-      body: BlocBuilder<ProfileCubit, ProfileState>(
+      body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
           if (state is ProfileLoading) {
             return const Center(child: CircularProgressIndicator());
@@ -125,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               child: Column(
                                 children: [
-                                  _buildProfileRow(
+                                  ProfileRowWidget(
                                     icon: Icons.mail_outline_rounded,
                                     label: 'Email',
                                     value: email,
@@ -138,7 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   const SizedBox(height: 22),
 
-                                  _buildProfileRow(
+                                  ProfileRowWidget(
                                     icon: Icons.person_2_outlined,
                                     label: 'Username',
                                     value: name,
@@ -151,7 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   const SizedBox(height: 22),
 
-                                  _buildProfileRow(
+                                  ProfileRowWidget(
                                     icon: Icons.calendar_month_outlined,
                                     label: 'Tanggal Persalinan',
                                     value: birthDate,
@@ -179,7 +182,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               child: Column(
                                 children: [
-                                  _buildPreferenceRow(
+                                  PreferenceRowWidget(
                                     icon: Icons.notifications_none_outlined,
                                     label: 'Atur Notifikasi',
                                   ),
@@ -191,7 +194,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   const SizedBox(height: 22),
 
-                                  _buildPreferenceRow(
+                                  PreferenceRowWidget(
                                     icon: Icons.lock_outline_rounded,
                                     label: 'Ubah Kata Sandi',
                                   ),
@@ -205,7 +208,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                                   InkWell(
                                     onTap: () {
-                                      context.read<AuthCubit>().logout();
+                                      context.read<AuthBloc>().add(const LogoutEvent());
                                       Navigator.pushReplacementNamed(
                                         context,
                                         '/login',
@@ -248,44 +251,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildProfileRow({
-    required IconData icon,
-    required String label,
-    required String value,
-  }) {
-    return Row(
-      children: [
-        Icon(icon, size: 18, color: StaticColor.iconMuted),
-        const SizedBox(width: 14),
-        Text(label, style: AppTypography.b2),
-        const SizedBox(width: 16),
-        Expanded(
-          child: AutoSizeText(
-            value,
-            style: AppTypography.b2Regular,
-            textAlign: TextAlign.right,
-            maxLines: 1,
-            minFontSize: 10,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPreferenceRow({required IconData icon, required String label}) {
-    return Row(
-      children: [
-        Icon(icon, size: 18, color: StaticColor.iconMuted),
-        const SizedBox(width: 14),
-        Text(label, style: AppTypography.b2),
-        const Spacer(),
-        Icon(
-          Icons.chevron_right_rounded,
-          size: 18,
-          color: StaticColor.textPrimary,
-        ),
-      ],
-    );
-  }
 }

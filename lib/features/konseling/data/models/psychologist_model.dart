@@ -20,7 +20,7 @@ class PsychologistModel extends PsychologistEntity {
       title: json['title'] as String? ?? '-',
       job: json['job'] as String? ?? '-',
       experienceYears: json['experience_years'] as int? ?? 0,
-      priceIdr: json['price_idr'] as num? ?? 0,
+      priceIdr: json['price_idr'] as int? ?? 0,
       photoUrl: json['photo_url'] as String? ?? '',
       schedules: json['schedules'] != null
           ? (json['schedules'] as List)

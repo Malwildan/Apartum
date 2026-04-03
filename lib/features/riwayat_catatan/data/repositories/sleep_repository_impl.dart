@@ -1,7 +1,8 @@
+import 'package:dio/dio.dart';
+
 import 'package:apartum/features/riwayat_catatan/data/datasources/sleep_remote_data_source.dart';
 import 'package:apartum/features/riwayat_catatan/domain/entities/sleep_daily_entity.dart';
 import 'package:apartum/features/riwayat_catatan/domain/repositories/sleep_repository.dart';
-import 'package:dio/dio.dart';
 
 class SleepRepositoryImpl implements SleepRepository {
   final SleepRemoteDataSource _remoteDataSource;

@@ -2,7 +2,9 @@ import 'package:apartum/core/theme/app_typography.dart';
 import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:apartum/features/homepage/domain/entities/day_sleep_entity.dart';
 import 'package:apartum/features/homepage/domain/entities/day_status.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DayLabelWidget extends StatelessWidget {
   const DayLabelWidget({super.key, required this.data});
@@ -22,10 +24,11 @@ class DayLabelWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(11),
                 )
               : null,
-          child: Text(
+          child: AutoSizeText(
             data.label,
+            maxLines: 1,
             style: AppTypography.b3.copyWith(
-              fontSize: 12,
+              fontSize: 12.sp,
               color: data.isToday
                   ? StaticColor.surface
                   : StaticColor.textPrimary,

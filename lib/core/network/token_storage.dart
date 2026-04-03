@@ -11,8 +11,6 @@ class TokenStorage {
 
   TokenStorage(this._storage);
 
-  // ── Tokens ──
-
   Future<void> saveTokens({
     required String accessToken,
     required String refreshToken,
@@ -29,8 +27,6 @@ class TokenStorage {
     return token != null;
   }
 
-  // ── User info ──
-
   Future<void> saveUserInfo({
     required String name,
     required String email,
@@ -44,8 +40,6 @@ class TokenStorage {
   Future<String?> getUserName() => _storage.read(key: _keyUserName);
   Future<String?> getUserEmail() => _storage.read(key: _keyUserEmail);
   Future<String?> getUserBirthDate() => _storage.read(key: _keyUserBirthDate);
-
-  // ── Clear ──
 
   Future<void> clearAll() async {
     await _storage.delete(key: _keyAccessToken);

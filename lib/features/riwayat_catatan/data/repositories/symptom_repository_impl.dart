@@ -1,9 +1,10 @@
+import 'package:dio/dio.dart';
+
 import 'package:apartum/features/riwayat_catatan/data/datasources/symptom_remote_data_source.dart';
 import 'package:apartum/features/riwayat_catatan/data/models/symptom_request_model.dart';
 import 'package:apartum/features/riwayat_catatan/domain/entities/symptom_entity.dart';
 import 'package:apartum/features/riwayat_catatan/domain/entities/symptom_request_entity.dart';
 import 'package:apartum/features/riwayat_catatan/domain/repositories/symptom_repository.dart';
-import 'package:dio/dio.dart';
 
 class SymptomRepositoryImpl implements SymptomRepository {
   final SymptomRemoteDataSource _remoteDataSource;

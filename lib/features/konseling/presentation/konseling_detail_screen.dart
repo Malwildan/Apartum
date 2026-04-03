@@ -3,8 +3,9 @@ import 'package:apartum/core/global_widget/status_card_widget.dart';
 import 'package:apartum/core/theme/app_typography.dart';
 import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:apartum/features/konseling/domain/entities/schedule_entity.dart';
-import 'package:apartum/features/konseling/presentation/cubit/konseling_detail_cubit.dart';
-import 'package:apartum/features/konseling/presentation/cubit/konseling_detail_state.dart';
+import 'package:apartum/features/konseling/presentation/bloc/konseling_detail_bloc.dart';
+import 'package:apartum/features/konseling/presentation/bloc/konseling_detail_event.dart';
+import 'package:apartum/features/konseling/presentation/bloc/konseling_detail_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +26,9 @@ class _KonselingDetailScreenState extends State<KonselingDetailScreen> {
     if (!_isInit) {
       final id = ModalRoute.of(context)?.settings.arguments as String?;
       if (id != null) {
-        context.read<KonselingDetailCubit>().fetchPsychologistDetail(id);
+        context
+            .read<KonselingDetailBloc>()
+            .add(FetchPsychologistDetailEvent(id));
       }
       _isInit = true;
     }
@@ -151,7 +154,7 @@ class _KonselingDetailScreenState extends State<KonselingDetailScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              BlocBuilder<KonselingDetailCubit, KonselingDetailState>(
+              BlocBuilder<KonselingDetailBloc, KonselingDetailState>(
                 builder: (context, state) {
                   if (state is KonselingDetailLoading) {
                     return const Padding(

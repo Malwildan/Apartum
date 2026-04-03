@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:apartum/core/theme/app_typography.dart';
-import 'package:flutter/material.dart';
 
 class RiwayatCalendarWidget extends StatelessWidget {
   final DateTime selectedDate;
@@ -58,10 +60,10 @@ class RiwayatCalendarWidget extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
       decoration: BoxDecoration(
         color: StaticColor.surface,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: StaticColor.divider.withValues(alpha: 0.5)),
         boxShadow: const [
           BoxShadow(
@@ -107,7 +109,7 @@ class RiwayatCalendarWidget extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           // Weekday name labels row
           Row(
             children: weekDays.map((day) {
@@ -125,7 +127,7 @@ class RiwayatCalendarWidget extends StatelessWidget {
               );
             }).toList(),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           // Day cells row
           Row(
             children: weekDays.map((day) {
@@ -137,12 +139,12 @@ class RiwayatCalendarWidget extends StatelessWidget {
               if (isSelected) {
                 decoration = BoxDecoration(
                   color: StaticColor.primaryPink,
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(15.r),
                 );
               } else if (isToday) {
                 decoration = BoxDecoration(
                   color: StaticColor.primaryPink.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(15.r),
                 );
               }
 
@@ -175,8 +177,8 @@ class RiwayatCalendarWidget extends StatelessWidget {
                       ? null
                       : () => onDaySelected(day, day),
                   child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 1),
-                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    margin: EdgeInsets.symmetric(horizontal: 1.w),
+                    padding: EdgeInsets.symmetric(vertical: 6.h),
                     decoration: decoration,
                     child: Center(
                       child: Text(

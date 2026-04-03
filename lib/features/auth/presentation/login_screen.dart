@@ -2,8 +2,9 @@ import 'package:apartum/core/global_widget/app_button.dart';
 import 'package:apartum/core/global_widget/app_inputfield.dart';
 import 'package:apartum/core/theme/app_typography.dart';
 import 'package:apartum/core/theme/app_static_color.dart';
-import 'package:apartum/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:apartum/features/auth/presentation/cubit/auth_state.dart';
+import 'package:apartum/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:apartum/features/auth/presentation/bloc/auth_event.dart';
+import 'package:apartum/features/auth/presentation/bloc/auth_state.dart';
 import 'package:apartum/features/riwayat_catatan/presentation/bloc/symptom_bloc.dart';
 import 'package:apartum/features/riwayat_catatan/presentation/bloc/symptom_event.dart';
 import 'package:flutter/material.dart';
@@ -41,15 +42,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _onLoginPressed() {
     FocusScope.of(context).unfocus();
-    context.read<AuthCubit>().login(
+    context.read<AuthBloc>().add(LoginEvent(
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
-    );
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthCubit, AuthState>(
+    return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -142,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: 18,
                 ),
                 const SizedBox(height: 32),
-                BlocBuilder<AuthCubit, AuthState>(
+                BlocBuilder<AuthBloc, AuthState>(
                   builder: (context, state) {
                     final isLoading = state is AuthLoading;
 

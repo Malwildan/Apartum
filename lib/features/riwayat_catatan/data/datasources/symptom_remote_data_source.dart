@@ -1,7 +1,8 @@
+import 'package:dio/dio.dart';
+
 import 'package:apartum/core/network/dio_client.dart';
 import 'package:apartum/features/riwayat_catatan/data/models/symptom_model.dart';
 import 'package:apartum/features/riwayat_catatan/data/models/symptom_request_model.dart';
-import 'package:dio/dio.dart';
 
 abstract class SymptomRemoteDataSource {
   Future<SymptomModel> saveSymptom(SymptomRequestModel request);

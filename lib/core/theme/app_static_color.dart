@@ -11,7 +11,6 @@ class StaticColor {
   static const Color textPrimary = Color(0xFF1F2937);
   static const Color textMuted = Color(0xFF6B7280);
 
-  // ── Gradients ──
   static const LinearGradient linearPink = LinearGradient(
     begin: Alignment.centerLeft,
     end: Alignment.centerRight,
@@ -23,14 +22,12 @@ class StaticColor {
     ],
   );
 
-  // ── Additional semantic colors ──
   static const Color iconMuted = Color(0xFF4B4B4B);
   static const Color divider = Color(0xFFD3D5DC);
   static const Color disabled = Color(0xFFD0D0D0);
   static const Color disabledText = Color(0xFF8A8A8A);
   static const Color destructive = Color(0xFFFF3B30);
 
-  // ── Info Banner ──
   static const Color bannerDefaultBackground = Color(0xFFFDEEEF);
   static const Color bannerDefaultBorder = Color(0xFFF5A3A9);
   static const Color bannerDefaultIcon = Color(0xFF421518);
@@ -51,7 +48,6 @@ class StaticColor {
   static const Color bannerDoneIcon = Color(0xFF5AB6A5);
   static const Color bannerDoneText = Color(0xFF1B6254);
 
-  // ── Sleep Entry ──
   static const Color sleepNoticeBackground = Color(0xFFF5F5F5);
   static const Color sleepingStatusBackground = Color(0xFFFFF0F0);
   static const Color completedStatusBackground = Color(0xFFE8F8EF);
