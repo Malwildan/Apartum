@@ -4,11 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ApartumTheme {
-  ApartumTheme._();
 
-  // ──────────────────────────────────────────────
-  //  Light Theme
-  // ──────────────────────────────────────────────
   static ThemeData get light {
     final colorScheme = ColorScheme.fromSeed(
       seedColor: StaticColor.primaryPink,

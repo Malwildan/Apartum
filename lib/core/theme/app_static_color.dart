@@ -29,4 +29,32 @@ class StaticColor {
   static const Color disabled = Color(0xFFD0D0D0);
   static const Color disabledText = Color(0xFF8A8A8A);
   static const Color destructive = Color(0xFFFF3B30);
+
+  // ── Info Banner ──
+  static const Color bannerDefaultBackground = Color(0xFFFDEEEF);
+  static const Color bannerDefaultBorder = Color(0xFFF5A3A9);
+  static const Color bannerDefaultIcon = Color(0xFF421518);
+  static const Color bannerDefaultText = Color(0xFF5B112B);
+
+  static const Color bannerDangerBackground = Color(0xFFFFE8E8);
+  static const Color bannerDangerBorder = Color(0xFFE05252);
+  static const Color bannerDangerIcon = Color(0xFF8B1A1A);
+  static const Color bannerDangerText = Color(0xFF7B0000);
+
+  static const Color bannerWarningBackground = Color(0xFFFFF8E1);
+  static const Color bannerWarningBorder = Color(0xFFFFB74D);
+  static const Color bannerWarningIcon = Color(0xFF8A5200);
+  static const Color bannerWarningText = Color(0xFF5D3A00);
+
+  static const Color bannerDoneBackground = Color(0xFFE4F6F1);
+  static const Color bannerDoneBorder = Color(0xFF5AB6A5);
+  static const Color bannerDoneIcon = Color(0xFF5AB6A5);
+  static const Color bannerDoneText = Color(0xFF1B6254);
+
+  // ── Sleep Entry ──
+  static const Color sleepNoticeBackground = Color(0xFFF5F5F5);
+  static const Color sleepingStatusBackground = Color(0xFFFFF0F0);
+  static const Color completedStatusBackground = Color(0xFFE8F8EF);
+  static const Color completedStatusText = Color(0xFF1B6E3D);
+  static const Color pinkLight = Color(0xFFFF8FA3);
 }

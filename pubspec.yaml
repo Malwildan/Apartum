@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  equatable: ^2.0.5
+  bloc_concurrency: ^0.3.0
   flutter_bloc: ^9.1.1
   google_fonts: ^8.0.2
   auto_size_text: ^3.0.0

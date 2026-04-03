@@ -22,6 +22,20 @@ class KonselingRepositoryImpl implements KonselingRepository {
     }
   }
 
+  @override
+  Future<PsychologistEntity> getPsychologistDetail(String id) async {
+    try {
+      return await _remoteDataSource.getPsychologistDetail(id);
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        throw Exception('Sesi telah berakhir. Silakan masuk kembali.');
+      }
+      throw Exception(_extractErrorMessage(e));
+    } catch (e) {
+      throw Exception('Terjadi kesalahan pada server saat memuat detail psikolog.');
+    }
+  }
+
   String _extractErrorMessage(DioException e) {
     if (e.type == DioExceptionType.connectionTimeout ||
         e.type == DioExceptionType.receiveTimeout) {

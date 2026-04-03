@@ -29,7 +29,7 @@ class BottomNavWidget extends StatelessWidget {
 
   static const List<BottomNavItemData> items = [
     BottomNavItemData(icon: Icons.home_rounded, label: 'Beranda'),
-    BottomNavItemData(icon: Icons.history, label: 'Riwayat'),
+    BottomNavItemData(icon: Icons.history, label: 'Riwayat Catatan'),
     BottomNavItemData(icon: Icons.support_agent_rounded, label: 'Konseling'),
     BottomNavItemData(icon: Icons.person_rounded, label: 'Profil'),
   ];

@@ -2,4 +2,5 @@ import 'package:apartum/features/konseling/domain/entities/psychologist_entity.d
 
 abstract class KonselingRepository {
   Future<List<PsychologistEntity>> getPsychologists();
+  Future<PsychologistEntity> getPsychologistDetail(String id);
 }

@@ -1,4 +1,5 @@
 import 'package:apartum/features/konseling/domain/entities/psychologist_entity.dart';
+import 'package:apartum/features/konseling/data/models/schedule_model.dart';
 
 class PsychologistModel extends PsychologistEntity {
   const PsychologistModel({
@@ -9,6 +10,7 @@ class PsychologistModel extends PsychologistEntity {
     required super.experienceYears,
     required super.priceIdr,
     required super.photoUrl,
+    super.schedules,
   });
 
   factory PsychologistModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,11 @@ class PsychologistModel extends PsychologistEntity {
       experienceYears: json['experience_years'] as int? ?? 0,
       priceIdr: json['price_idr'] as num? ?? 0,
       photoUrl: json['photo_url'] as String? ?? '',
+      schedules: json['schedules'] != null
+          ? (json['schedules'] as List)
+              .map((e) => ScheduleModel.fromJson(e as Map<String, dynamic>))
+              .toList()
+          : null,
     );
   }
 }

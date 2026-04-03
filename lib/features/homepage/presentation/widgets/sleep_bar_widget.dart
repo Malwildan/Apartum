@@ -21,7 +21,6 @@ class SleepBarWidget extends StatelessWidget {
     return hour - chartStartHour;
   }
 
-
   @override
   Widget build(BuildContext context) {
     final trackRadius = barWidth / 2;
@@ -51,6 +50,10 @@ class SleepBarWidget extends StatelessWidget {
 
     final topPx = topFraction * availableHeight;
     final heightPx = heightFraction.abs() * availableHeight;
+
+    if (data.barColor == Colors.transparent) {
+      return Align(alignment: Alignment.topCenter, child: backgroundTrack);
+    }
 
     if (!data.isSleepTracked) {
       return Align(
@@ -89,29 +92,57 @@ class SleepBarWidget extends StatelessWidget {
       );
     }
 
+    // Filled bar represents SLEEP time: segments before and after the awake window
+    // are painted with barColor, while [topPx, topPx+heightPx] shows only the
+    // background track (the awake/empty region).
+    final topSegmentHeight = topPx.clamp(0.0, availableHeight);
+    final bottomStart = (topPx + heightPx).clamp(0.0, availableHeight);
+    final bottomSegmentHeight = (availableHeight - bottomStart).clamp(0.0, availableHeight);
+
     return Stack(
       clipBehavior: Clip.none,
       children: [
         backgroundTrack,
-        Positioned(
-          top: topPx,
-          left: 0,
-          right: 0,
-          height: heightPx.clamp(8.0, availableHeight),
-          child: Container(
-            decoration: BoxDecoration(
-              color: data.barColor,
-              borderRadius: BorderRadius.circular(trackRadius),
-              boxShadow: [
-                BoxShadow(
-                  color: data.barColor.withOpacity(0.35),
-                  blurRadius: 6,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+        if (topSegmentHeight > 0)
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            height: topSegmentHeight,
+            child: Container(
+              decoration: BoxDecoration(
+                color: data.barColor,
+                borderRadius: BorderRadius.circular(trackRadius),
+                boxShadow: [
+                  BoxShadow(
+                    color: data.barColor.withOpacity(0.35),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
+        if (bottomSegmentHeight > 0)
+          Positioned(
+            top: bottomStart,
+            left: 0,
+            right: 0,
+            height: bottomSegmentHeight,
+            child: Container(
+              decoration: BoxDecoration(
+                color: data.barColor,
+                borderRadius: BorderRadius.circular(trackRadius),
+                boxShadow: [
+                  BoxShadow(
+                    color: data.barColor.withOpacity(0.35),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+            ),
+          ),
       ],
     );
   }

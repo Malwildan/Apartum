@@ -1,23 +1,33 @@
 import 'package:apartum/core/theme/app_typography.dart';
 import 'package:apartum/core/theme/app_static_color.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:apartum/core/global_widget/button.dart';
+import 'package:apartum/core/global_widget/app_button.dart';
 import 'package:flutter/material.dart';
 
 class DailyCheckWidget extends StatelessWidget {
   const DailyCheckWidget({
     super.key,
-    required this.message,
-    this.buttonLabel = 'Catat Kondisi Hari Ini',
+    required this.isLogged,
     this.onTap,
   });
 
-  final String message;
-  final String buttonLabel;
+  final bool isLogged;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
+    final String message;
+    final String buttonLabel;
+
+    if (isLogged) {
+      message = 'Anda sudah mencatat kondisi hari ini';
+      buttonLabel = 'Ubah Pencatatan Hari Ini';
+    } else {
+      message =
+          'Yuk catat kondisi dan gejala yang dialami hari ini, pencatatan hanya membutuhkan waktu kurang dari 1 menit😊';
+      buttonLabel = 'Catat Kondisi Hari Ini';
+    }
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 10),
@@ -50,7 +60,7 @@ class DailyCheckWidget extends StatelessWidget {
           const SizedBox(height: 12),
           AppButton(
             label: buttonLabel,
-            onPressed: () {},
+            onPressed: onTap ?? () {},
             height: 44,
             borderRadius: 24,
             backgroundColor: StaticColor.primaryPink,
